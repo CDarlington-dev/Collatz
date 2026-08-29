@@ -1,0 +1,11 @@
+{
+  "map": "accelerated: even n/2; odd (3n+1)/2",
+  "lo_inclusive": 10015,
+  "hi_inclusive": 26017,
+  "starts": 16003,
+  "maximum_steps_to_first_one": 178,
+  "maximum_steps_start": 23529,
+  "maximum_state": "25071632",
+  "maximum_state_start": 20895,
+  "paradoxical_prefixes": 0
+}

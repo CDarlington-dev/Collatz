@@ -1,0 +1,45 @@
+{
+  "schema": "collatz-farey-v1",
+  "certificates": [
+    {
+      "id": "optimized-first-feedback",
+      "m": "99781",
+      "a": "1054",
+      "b": "665",
+      "c": "485",
+      "d": "306",
+      "optimal_j": "1539",
+      "optimal_q": "971"
+    },
+    {
+      "id": "rt-first-feedback",
+      "m": "113383",
+      "a": "1054",
+      "b": "665",
+      "c": "485",
+      "d": "306",
+      "optimal_j": "1539",
+      "optimal_q": "971"
+    },
+    {
+      "id": "rt-second-feedback",
+      "m": "23035537407",
+      "a": "176251",
+      "b": "111202",
+      "c": "125743",
+      "d": "79335",
+      "optimal_j": "301994",
+      "optimal_q": "190537"
+    },
+    {
+      "id": "current-extension-feedback",
+      "m": "51739336447",
+      "a": "176251",
+      "b": "111202",
+      "c": "125743",
+      "d": "79335",
+      "optimal_j": "301994",
+      "optimal_q": "190537"
+    }
+  ]
+}

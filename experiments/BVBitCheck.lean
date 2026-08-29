@@ -1,0 +1,9 @@
+import Std.Tactic.BVDecide
+#check Std.Tactic.BVDecide.BVBit.ext
+#check Std.Tactic.BVDecide.BVBit.ext_iff
+#check Fin.heq_iff_eq
+#check Fin.heq_of_eq_val
+#check Fin.ext
+#check Std.Tactic.BVDecide.BVBit.mk.injEq
+#check heq_of_eq
+#check eq_of_heq

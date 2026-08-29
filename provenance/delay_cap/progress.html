@@ -1,0 +1,982 @@
+<!doctype html>
+<html>
+<head>
+<meta name="description" content="The 3x+1 (or Collatz) sequences and their properties">
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<meta http-equiv="pragma" content="no-cache">
+<title> 3x+1 Class records calculation progress map</title>
+<link href="wondrous.ico" rel="shortcut icon">
+<style type="text/css">
+A { font-weight:bold; }
+#blocks td { white-space:nowrap;}
+#blocks>tbody>tr:first-of-type td { background-color:#6633cc; color:#ff9966; text-align:center; 
+        font-family: verdana, arial, times; font-weight:bold; font-size:18pt; }
+.open, .asgn, .prog, .comp, .record, table#news tr:nth-of-type(n+2) td
+        { font-family:verdana,arial,serif; font-weight:bold; font-size:13px; }
+.open, .asgn, .prog, .comp, .record
+        { text-align:center; }
+.open	{ background-color:#ffffff; }
+.asgn	{ background-color:#6699ff; }
+.prog	{ background-color:#ffcc40; }
+.comp	{ background-color:#ccffcc; }
+.record { background-color:#55dd77; }
+#news tr { display:none; }
+#news td { padding:0; }
+#news tr:first-of-type td { font-family:verdana,arial,sans-serif; font-size:18px;
+              font-weight:bold; text-align:center;color:#3333cc; 
+              margin-left:35%; line-height:180%; text-decoration:underline; }
+#news tr:nth-of-type(n+2) td:nth-of-type(1) {text-align:right;
+                          padding-right:0.35em; white-space:nowrap; }
+#news tr:nth-of-type(n+2) td:nth-of-type(2) {text-align:left; padding-left:0.35em; }
+#news tr:nth-of-type(2n+2) td:nth-of-type(2) { background-color:#d8ffd8; }
+#news tr:nth-of-type(2n+3) td:nth-of-type(2) { background-color:#d8d8ff; }
+#news tr:nth-of-type(n+2) td.fold { cursor:pointer; text-align:center; }
+</style>
+
+<script>
+function start() {
+  let news = document.getElementById('news')
+  let fold = document.getElementsByClassName('fold')[0]
+  fold.addEventListener('click', function(e) {
+    let foldrow = e.target.parentNode
+    for( let sib = foldrow.nextElementSibling; sib != null; sib = sib.nextElementSibling) {
+      sib.style.display = sib.style.display == '' ? 'table-row' : ''
+    }
+  })
+  for( let sib = fold.parentNode; sib != null; sib = sib.previousElementSibling) {
+    sib.style.display = 'table-row';
+  }
+}
+</script>
+
+</head> 
+
+<body onload="start()">
+
+<p>
+<table bgcolor=black width="100%" cellpadding=4 id=blocks>
+
+<tr>
+<td colspan=10>
+3x+1 Class records calculation progress map<br>
+</td></tr>
+
+<tr bgcolor="#fcfcff"><td colspan=10>
+  <table cellspacing=4 cellpadding=0 border=0 width="100%"><tr>
+  <td nowrap style="font-family:verdana,times,arial; font-size:13px">
+  Status of the 3x+1 class record progress as of: Jul 29, 2026.
+  <br>Intervals are indicated in units of 1,000,000,000,000 (1 E+12 or 1 trillion numbers).
+  <br>Calculation of a single block of 10,000 units takes approximately 2-4 days on an NVIDIA graphics processor.
+  <br>
+  <br>All class records found so far can be viewed on the <a href=classrec.html>class records page</a>.
+  <br>This project can only run because of many cooperating <a href="#contrib">contributors</a>.
+  <br>If you would like to contribute one or more blocks please go to the <a href=search.html>search page</a>.
+  <br>Note: the 3x+1 problem is just one of many 
+  <a href="http://www.distributedcomputing.info/">distributed projects</a> on the internet. 
+  </td>
+  <td>
+  <img align=right src="wondrous.gif" height=123 width=178 border=0 
+       alt="Trajectory of 63,728,127" title="Trajectory of 63,728,127">
+  </td></tr></table>
+</td></tr>
+<tr bgcolor=white>
+<td colspan=10>
+<table id=news>
+<tr><td colspan=2>Progress history</td></tr>
+<tr><td>June 30 2026 :</td>
+  <td> All blocks up to 46,500 completed. Three more class records confirmed.</td>
+<tr><td>June 12 2026 :</td>
+  <td> Possible New Delay record (Delay 2480) found by Lutz.</td>
+<tr><td>May 12 2026 :</td>
+  <td> All blocks up to 42,750 completed. No class records confirmed.</td>
+<tr><td>March 6 2026 :</td>
+  <td> All blocks up to 42,100 completed. Ten more class records confirmed.</td>
+<tr><td>March 6 2026 :</td>
+  <td> All blocks up to 42,100 completed. Ten more class records confirmed.</td>
+<tr><td>December 24 2025 :</td>
+  <td> All blocks up to 35,900 completed. Three more class records confirmed.</td>
+<tr><td>July 12 2025 :</td>
+  <td> All blocks up to 33,900 completed. One more class record confirmed.</td>
+<tr><td>May 18 2025 :</td>
+  <td> All blocks up to 33,100 completed. Three more class records confirmed.</td>
+<tr><td>January 5 2025 :</td>
+  <td> All blocks up to 29,500 completed. Seven more class records confirmed.</td>
+<tr><td>October 25 2024 :</td>
+  <td> All blocks up to 27,900 completed. Two more class records confirmed.</td>
+<tr><td>September 4 2024 :</td>
+  <td> New Delay record (Delay 2456) found by Kevin.</td>
+<tr><td>July 20 2024 :</td>
+  <td> All blocks up to 27,100 completed. Two more class records confirmed.</td>
+<tr><td>June 3 2024 :</td>
+  <td> All blocks up to 25,460 completed. One more class record confirmed.</td>
+<tr><td>March 27 2024 :</td>
+  <td> All blocks up to 25,300 completed. Three more class records confirmed.</td>
+
+<tr><td></td><td class=fold>Show/Hide earlier milestones</td></tr>  
+
+<tr><td>December 2023 :</td>
+  <td> All blocks up to 24,000 completed. Eight more class records confirmed.</td>
+<tr><td>May 2023 :</td>
+  <td> All blocks up to 21,000 completed. Nine more class records confirmed.</td>
+<tr><td>January 23 2023 :</td>
+  <td> All blocks up to 18,500 completed. Every number up to 64 bits checked. Five class records confirmed.</td>
+<tr><td>August 2022 :</td>
+  <td> All blocks up to 16,400 completed. Five class records confirmed.</td>
+<tr><td>May 2022 :</td>
+  <td> All blocks up to 15,000 completed. Seven class records confirmed.</td>
+<tr><td>May 2022 :</td>
+  <td> New Delay record (Delay 2442) found by Kevin.</td>
+<tr><td>March 2022 :</td>
+  <td> All blocks up to 13,480 completed. Five class records confirmed.</td>
+<tr><td>February 2022 :</td>
+  <td> New Delay record (Delay 2429) found by Kevin.</td>
+<tr><td>January 2022 :</td>
+  <td> All blocks up to 12,300 completed. Six more class records confirmed.</td>
+<tr><td>December 2021 :</td>
+  <td> All blocks up to 10,820 completed. Eight class records confirmed.</td>
+<tr><td>September 2021 :</td>
+  <td> New Delay record (Delay 2426) found by Kevin.</td>
+<tr><td>August 2021 :</td>
+  <td> All blocks up to 9000,000 completed. Six class records confirmed.</td>
+<tr><td>July 2021 :</td>
+  <td> All blocks up to 8000,000 completed. Eight class records confirmed.</td>
+<tr><td>May 2021 :</td>
+  <td> All blocks up to 6640,000 completed. Twelve class records confirmed.</td>
+<tr><td>April 2021 :</td>
+  <td> New Delay record (Delay 2389) found by Kevin.</td>
+<tr><td>February 2021 :</td>
+  <td> New Delay record (Delay 2363) found by Kevin.</td>
+</tr><tr><td>February 2021 :</td>
+  <td> New Delay record (Delay 2337) found by Volkmar. </td></tr>
+<tr><td>January 2021 :</td>
+  <td> All blocks up to 4700,000 completed. Eight class records confirmed. </td></tr>
+<tr><td>December 2020 :</td>
+  <td> All blocks up to 3940,000 completed. Eleven class records confirmed.</td></tr>
+<tr><td>December 2020 :</td>
+  <td> New Delay record (Delay 2334) found by Kevin.</td></tr>
+<tr><td>November 2020 :</td>
+  <td> All blocks up to 2900,000 completed. Delay record 2331 and twelve more class records confirmed</td></tr>
+<tr><td>September 2020 :</td>
+  <td> All blocks up to 2300,000 completed. Eleven class records confirmed</td></tr>
+<tr><td>September 2020 :</td>
+  <td> All blocks up to 2000,000 completed. Fifteen class records confirmed</td></tr>
+<tr><td>August 2020 :</td>
+  <td> All blocks up to 1620,000 completed. Sixteen class records confirmed</td></tr>
+<tr><td>July 2020 :</td>
+  <td> All blocks up to 1300,000 completed. 37 class records confirmed</td></tr>
+<tr><td>June 30 2020 :</td>
+  <td> New Delay record (Delay 2330) found by Eric.</td></tr>
+<tr><td>June 28 2020 :</td>
+  <td> New Delay record (Delay 2286) found by Kevin.</td></tr>
+<tr><td>May 30 2020 :</td>
+  <td> New Delay record (Delay 2283) found by Kevin.</td></tr>
+<tr><td>May 2020 :</td>
+  <td> All blocks up to 820,000 completed. Sixteen class record confirmed. All class records below 2100 known.</td></tr>
+<tr><td>March 2020 :</td>
+  <td> All blocks up to 698,000 completed. Twelve more class records confirmed.</td></tr>
+<tr><td>December 2019 :</td>
+  <td> All blocks up to 602,000 completed. Nine class records confirmed.</td></tr>
+<tr><td>September 2019 :</td>
+  <td> All blocks up to 561,200 completed. Delay record 2277 and ten more class record confirmed.</td></tr>
+<tr><td>May 2019 :</td>
+  <td> All blocks up to 500,000 completed. Delay record 2264 and eight more class records confirmed.</td></tr>
+<tr><td>March 2019 :</td>
+  <td> All blocks up to 455,200 completed. Lowest missing class record (2070) and four others confirmed.</td></tr>
+<tr><td>December 2018 :</td>
+  <td> All blocks up to 387,000 completed. Delay record 2261 and nine more class records confirmed.</td></tr>
+<tr><td>October 2018 :</td>
+  <td> All blocks up to 366,400 completed. Six more class records confirmed.</td></tr>
+<tr><td>June 2018 :</td>
+  <td> All blocks up to 346,000 completed. Three more class records confirmed.</td></tr>
+<tr><td>December 2017 :</td>
+  <td> All blocks up to 326,500 completed. Five more class records confirmed.</td></tr>
+<tr><td>May 2017 :</td>
+  <td> All blocks up to 305,400 completed. 2<sup>58</sup> reached. Two more class record confirmed.</td></tr>
+<tr><td>October 2016 :</td>
+  <td> All blocks up to 280,000 completed. Three class records confirmed.</td></tr>
+<tr><td>March 2016 :</td>
+  <td> All blocks up to 275,200 completed. Four more class records confirmed.</td></tr>
+<tr><td>March 19 2016 :</td>
+  <td> New Delay Record (Delay 2258) found by Lutz.</td></tr>
+<tr><td>December 2015 :</td>
+  <td> All blocks up to 263,350 completed. Four more class records confirmed. 2100 class records known.</td></tr>
+<tr><td>July 2015 :</td>
+  <td> All blocks up to 245,500 completed. Five more class records confirmed.</td></tr>
+<tr><td>December 2014 :</td>
+  <td> All blocks up to 222,280 completed. Three more class records confirmed.</td></tr>
+<tr><td>November 2014 :</td>
+  <td> All blocks up to 213,800 completed. Delay record 2255 and two more class records confirmed.</td></tr>
+<tr><td>May 2014 :</td>
+  <td> All blocks up to 203,920 completed. Three class records confirmed.</td></tr>
+<tr><td>February 2014 :</td>
+  <td> All blocks up to 194,060 completed. Five class records confirmed. All class records up to 2050 known.</td></tr>
+<tr><td>November 2013 :</td>
+  <td> All blocks up to 184,000 completed. Three more class records confirmed</td></tr>
+<tr><td>June 2013 :</td>
+  <td> All blocks up to 166,700 completed. Two more class records confirmed.</td></tr>
+<tr><td>April 2013 :</td>
+  <td> All blocks up to 165,200 completed. One more class record confirmed.</td></tr>
+<tr><td>February 2013 :</td>
+  <td> All blocks up to 160,740 completed. Six more class records confirmed.</td></tr>
+<tr><td>November 2012 :</td>
+  <td> All blocks up to 148,800 completed. Five more class records confirmed</td></tr>
+<tr><td>May 2012 :</td>
+  <td> All blocks up to 132,360 completed. Five class records confirmed.</td></tr>
+<tr><td>January 2012 :</td>
+  <td> All blocks up to 121,500 completed. Final missing class record below 2000 found.</td></tr>
+<tr><td>December 2011 :</td>
+  <td> All blocks up to 120,200 completed. One class record confirmed.</td></tr>
+<tr><td>October 2011 :</td>
+  <td> All blocks up to 117,000 completed. Three more class record confirmed.</td></tr>
+<tr><td>July 2011 :</td>
+  <td> All blocks up to 107,500 completed. Delay record 2254 and three class records confirmed.</td></tr>
+<tr><td>April 2011 :</td>
+  <td> All blocks up to 97,080 completed. Delay Record 2091 and two other class records confirmed.</td></tr>
+<tr><td>November 2010 :</td>
+  <td> All blocks up to 91,880 completed. Three class records confirmed.</td></tr>
+<tr><td>August 2010 :</td>
+  <td> All blocks up to 90,000 completed. Four more class records confirmed.</td></tr>
+<tr><td>February 2010 :</td>
+  <td> All blocks up to 82,700 completed. Two class records confirmed.</td></tr>
+<tr><td>June 2009 :</td>
+  <td> All blocks up to 76,160 completed. The lowest missing CR (1964) and one other confirmed.</td></tr>
+<tr><td>April 2009 :</td>
+  <td> All blocks up to 72,520 completed, passing 2<sup>56</sup>. Three class records confirmed.</td></tr>
+<tr><td>February 2009 :</td>
+  <td> All blocks up to 71,020 completed. One more class record confirmed.</td></tr>
+<tr><td>December 2008 :</td>
+  <td> All blocks up to 69,740 completed. The lowest missing CR (1951) and two more confirmed.</td></tr>
+<tr><td>November 2008 :</td>
+  <td> All blocks up to 67,500 completed. Class record 2000 finally confirmed.</td></tr>
+<tr><td>October 2008 :</td>
+  <td> All blocks up to 66,380 completed. Four more class records confirmed.</td></tr>
+<tr><td>May 2008 :</td>
+  <td> All blocks up to 61,160 completed. The lowest missing CR (1925) and three others confirmed.</td></tr>
+<tr><td>December 2007 :</td>
+  <td> All blocks up to 58,600 completed. Four class records confirmed.</td></tr>
+<tr><td>April 2007 :</td>
+  <td> All blocks up to 54,540 completed. Five more class records confirmed.</td></tr>
+<tr><td>October 2006 :</td>
+  <td> All blocks up to 50,000 completed. Delay Record 2090 and five class records confirmed.</td></tr>
+<tr><td>November 2005 :</td>
+  <td> All blocks up to 46,100 completed. Double of Record 2045 confirmed as Delay Record 2046.</td></tr>
+<tr><td>August 2005 :</td>
+  <td> All blocks up to 45,040 completed. Five class records confirmed.</td></tr>
+<tr><td>May 2005 :</td>
+  <td> Delay Record of 2090 found at &plusmn;46,785 E+12 by Eric</td></tr>
+<tr><td>February 2005 :</td>
+  <td> All blocks up to 42,060 completed. Three more class record confirmed.</td></tr>
+<tr><td>November 2004 :</td>
+  <td> All blocks up to 40,000 completed. Four class records confirmed.</td></tr>
+<tr><td>August 2004 :</td>
+  <td> All blocks up to 37,500 completed. Another four class records confirmed.</td></tr>
+<tr><td>May 2004 :</td>
+  <td> All blocks up to 36,120 completed. Seven class records confirmed.</td></tr>
+<tr><td>January 2004 :</td>
+  <td> All blocks up to 31,960 completed. Five further class records confirmed.</td></tr>
+<tr><td>November 2003 :</td>
+  <td> All blocks up to 29,840 completed. One more class record confirmed.
+<tr><td>August 2003 :</td>
+  <td> All blocks up to 29,240 completed. Another fifteen class records confirmed.</td></tr>
+<tr><td>April 2003 :</td>
+  <td> All blocks up to 23,100 completed. Delay record 2045 and seven class records confirmed.</td></tr>
+<tr><td>December 2002 :</td>
+  <td> All blocks up to 20,100 completed. All class records below 1900 known.</td></tr>
+<tr><td valign=top>November 2002 :</td>
+  <td> All blocks up to 20,000 completed. Delay record 2042 and fourteen class records confirmed.</td></tr>
+<tr><td>November 2002 :</td>
+  <td> Delay Record of 2045 found at &plusmn;22,702 E+12 by Kevin</td></tr>
+<tr><td valign=top>July 2002 :</td>
+  <td> All blocks up to 16,460 completed. Delay record 2039 and fifteen class records confirmed.</td></tr>
+<tr><td>April 2002 :</td>
+  <td> All blocks up to 12,720 completed. Another fourteen class records confirmed.</td></tr>
+<tr><td>March 2002 :</td>
+  <td> Delay Record of 2042 found at &plusmn;17,026 E+12 by Michael</td></tr>
+<tr><td>February 2002 :</td>
+  <td> All blocks up to 9340 completed. Two more class records confirmed.</td></tr>
+<tr><td>December 2001 :</td>
+  <td> Delay Record of 2039 found at &plusmn;12,770 E+12 by Billy</td></tr>
+<tr><td valign=top>November 2001 :</td>
+  <td> All blocks up to 9020 completed. One Delay record and ten class records confirmed.</td></tr>
+<tr><td valign=top>September 2001 :</td>
+  <td> All blocks up to 6800 completed. Three Delay records and fourteen class records confirmed.&nbsp;</td></tr>
+<tr><td>August 2001 :</td>
+  <td> All blocks up to 3600 completed. Two Delay records and five class records confirmed</td></tr>
+<tr><td>June 2001 :</td>
+  <td> Delay Record of 1958 found at &plusmn;7579 E+12 by Kevin</td></tr>
+<tr><td>May 2001 :</td>
+  <td> Delay Record of 1919 found at &plusmn;6482 E+12 by Kevin</td></tr>
+<tr><td>April 2001 :</td>
+  <td> Delay Record of 1916 found at &plusmn;4861 E+12 by Kevin</td></tr>
+<tr><td>March 2001 :</td>
+  <td> Delay Record of 1903 found at &plusmn;4320 E+12 by Kevin</td></tr>
+<tr><td>March 2001 :</td>
+  <td> Delay Record of 1895 found at &plusmn;3586 E+12 by Eric</td></tr>
+<tr><td>March 2001 :</td>
+  <td> Delay Record of 1874 found at &plusmn;2978 E+12 by Kevin</td></tr>
+<tr><td>February 2001 :</td>
+  <td> All blocks up to 2620 completed. Three class records confirmed.</td></tr>
+<tr><td>January 2001 :</td>
+  <td> New Class and Delay Record of 1871 found at 2234,047405,400065.</td></tr>
+</table>
+<br />
+</td></tr>
+
+<tr><td colspan=2 class=comp>Range 2000-20000
+                        <br>completed <a href="progress0.html">(view)</a></td><td colspan=2 class=comp>Range 20000-40000
+                        <br>completed <a href="progress1.html">(view)</a></td><td colspan=2 class=comp>Range 40000-60000
+                        <br>completed <a href="progress2.html">(view)</a></td><td colspan=2 class=comp>Range 60000-80000
+                        <br>completed <a href="progress3.html">(view)</a></td><td colspan=2 class=comp>Range 80000-100000
+                        <br>completed <a href="progress4.html">(view)</a></td></tr><tr><td colspan=2 class=comp>Range 100000-120000
+                        <br>completed <a href="progress5.html">(view)</a></td><td colspan=2 class=comp>Range 120000-140000
+                        <br>completed <a href="progress6.html">(view)</a></td><td colspan=2 class=comp>Range 140000-160000
+                        <br>completed <a href="progress7.html">(view)</a></td><td colspan=2 class=comp>Range 160000-180000
+                        <br>completed <a href="progress8.html">(view)</a></td><td colspan=2 class=comp>Range 180000-200000
+                        <br>completed <a href="progress9.html">(view)</a></td></tr><tr><td colspan=2 class=comp>Range 200000-300000
+                        <br>completed <a href="progress10.html">(view)</a></td><td colspan=2 class=comp>Range 300000-400000
+                        <br>completed <a href="progress11.html">(view)</a></td><td colspan=2 class=comp>Range 400000-500000
+                        <br>completed <a href="progress12.html">(view)</a></td><td colspan=2 class=comp>Range 500000-600000
+                        <br>completed <a href="progress13.html">(view)</a></td><td colspan=2 class=comp>Range 600000-700000
+                        <br>completed <a href="progress14.html">(view)</a></td></tr><tr><td colspan=2 class=comp>Range 700000-800000
+                        <br>completed <a href="progress15.html">(view)</a></td><td colspan=2 class=comp>Range 800000-900000
+                        <br>completed <a href="progress16.html">(view)</a></td><td colspan=2 class=comp>Range 900000-1000000
+                        <br>completed <a href="progress17.html">(view)</a></td><td colspan=2 class=comp>Range 1000000-2000000
+                        <br>completed <a href="progress18.html">(view)</a></td><td colspan=2 class=comp>Range 2000000-3000000
+                        <br>completed <a href="progress19.html">(view)</a></td></tr><tr><td colspan=2 class=comp>Range 3000000-4000000
+                        <br>completed <a href="progress20.html">(view)</a></td><td colspan=2 class=comp>Range 4000000-5000000
+                        <br>completed <a href="progress21.html">(view)</a></td><td colspan=2 class=comp>Range 5000000-10000000
+                        <br>completed <a href="progress22.html">(view)</a></td><td colspan=2 class=comp>Range 10000000-15000000
+                        <br>completed <a href="progress23.html">(view)</a></td><td colspan=2 class=comp>Range 15000000-20000000
+                        <br>completed <a href="progress24.html">(view)</a></td></tr><tr><td colspan=2 class=comp>Range 20000000-25000000
+                        <br>completed <a href="progress25.html">(view)</a></td><td colspan=2 class=comp>Range 25000000-30000000
+                        <br>completed <a href="progress26.html">(view)</a></td><td colspan=2 class=comp>Range 30000000-35000000
+                        <br>completed <a href="progress27.html">(view)</a></td><td colspan=2 class=comp>Range 35000000-40000000
+                        <br>completed <a href="progress28.html">(view)</a></td><td colspan=2 class=comp>Range 40000000-45000000
+                        <br>completed <a href="progress29.html">(view)</a></td></tr>
+
+<tr>
+<td colspan="2" class="open">Not yet assigned</td>
+<td colspan="2" class="asgn">Assigned,<br> not yet started</td>
+<td colspan="2" class="prog">Assigned,<br> in progress</td>
+<td colspan="2" class="comp">Entire interval<br> completed</td>
+<td colspan="2" class="record">Interval completed<br> class record found</td>
+</tr>
+
+<tr>
+<td width="10%" class=comp>45000000-10000<br>Kevin</td>
+<td width="10%" class=comp>45010000-20000<br>Kevin</td>
+<td width="10%" class=comp>45020000-30000<br>Kevin</td>
+<td width="10%" class=comp>45030000-40000<br>Kevin</td>
+<td width="10%" class=comp>45040000-50000<br>Kevin</td>
+<td width="10%" class=comp>45050000-60000<br>Kevin</td>
+<td width="10%" class=comp>45060000-70000<br>Kevin</td>
+<td width="10%" class=comp>45070000-80000<br>Kevin</td>
+<td width="10%" class=comp>45080000-90000<br>Kevin</td>
+<td width="10%" class=comp>45090000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>45100000-10000<br>Kevin</td>
+<td class=comp>45110000-20000<br>Kevin</td>
+<td class=comp>45120000-30000<br>Kevin</td>
+<td class=comp>45130000-40000<br>Kevin</td>
+<td class=comp>45140000-50000<br>Kevin</td>
+<td class=comp>45150000-60000<br>Kevin</td>
+<td class=comp>45160000-70000<br>Kevin</td>
+<td class=comp>45170000-80000<br>Kevin</td>
+<td class=comp>45180000-90000<br>Kevin</td>
+<td class=comp>45190000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>45200000-10000<br>Kevin</td>
+<td class=comp>45210000-20000<br>Kevin</td>
+<td class=comp>45220000-30000<br>Kevin</td>
+<td class=comp>45230000-40000<br>Kevin</td>
+<td class=comp>45240000-50000<br>Kevin</td>
+<td class=comp>45250000-60000<br>Kevin</td>
+<td class=comp>45260000-70000<br>Kevin</td>
+<td class=comp>45270000-80000<br>Kevin</td>
+<td class=comp>45280000-90000<br>Kevin</td>
+<td class=comp>45290000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>45300000-10000<br>Kevin</td>
+<td class=comp>45310000-20000<br>Kevin</td>
+<td class=comp>45320000-30000<br>Kevin</td>
+<td class=comp>45330000-40000<br>Kevin</td>
+<td class=comp>45340000-50000<br>Kevin</td>
+<td class=comp>45350000-60000<br>Kevin</td>
+<td class=comp>45360000-70000<br>Kevin</td>
+<td class=comp>45370000-80000<br>Kevin</td>
+<td class=comp>45380000-90000<br>Kevin</td>
+<td class=comp>45390000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>45400000-10000<br>Kevin</td>
+<td class=comp>45410000-20000<br>Kevin</td>
+<td class=comp>45420000-30000<br>Kevin</td>
+<td class=comp>45430000-40000<br>Kevin</td>
+<td class=comp>45440000-50000<br>Kevin</td>
+<td class=comp>45450000-60000<br>Kevin</td>
+<td class=comp>45460000-70000<br>Kevin</td>
+<td class=comp>45470000-80000<br>Kevin</td>
+<td class=comp>45480000-90000<br>Kevin</td>
+<td class=comp>45490000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>45500000-10000<br>Kevin</td>
+<td class=comp>45510000-20000<br>Kevin</td>
+<td class=comp>45520000-30000<br>Kevin</td>
+<td class=comp>45530000-40000<br>Kevin</td>
+<td class=comp>45540000-50000<br>Kevin</td>
+<td class=comp>45550000-60000<br>Kevin</td>
+<td class=comp>45560000-70000<br>Kevin</td>
+<td class=comp>45570000-80000<br>Kevin</td>
+<td class=comp>45580000-90000<br>Kevin</td>
+<td class=comp>45590000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>45600000-10000<br>Kevin</td>
+<td class=comp>45610000-20000<br>Kevin</td>
+<td class=comp>45620000-30000<br>Kevin</td>
+<td class=comp>45630000-40000<br>Kevin</td>
+<td class=comp>45640000-50000<br>Kevin</td>
+<td class=comp>45650000-60000<br>Kevin</td>
+<td class=comp>45660000-70000<br>Kevin</td>
+<td class=comp>45670000-80000<br>Kevin</td>
+<td class=comp>45680000-90000<br>Kevin</td>
+<td class=comp>45690000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>45700000-10000<br>Kevin</td>
+<td class=comp>45710000-20000<br>Kevin</td>
+<td class=comp>45720000-30000<br>Kevin</td>
+<td class=comp>45730000-40000<br>Kevin</td>
+<td class=comp>45740000-50000<br>Kevin</td>
+<td class=comp>45750000-60000<br>Kevin</td>
+<td class=comp>45760000-70000<br>Kevin</td>
+<td class=comp>45770000-80000<br>Kevin</td>
+<td class=comp>45780000-90000<br>Kevin</td>
+<td class=comp>45790000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>45800000-10000<br>Kevin</td>
+<td class=comp>45810000-20000<br>Kevin</td>
+<td class=comp>45820000-30000<br>Kevin</td>
+<td class=comp>45830000-40000<br>Kevin</td>
+<td class=comp>45840000-50000<br>Kevin</td>
+<td class=comp>45850000-60000<br>Kevin</td>
+<td class=comp>45860000-70000<br>Kevin</td>
+<td class=comp>45870000-80000<br>Kevin</td>
+<td class=comp>45880000-90000<br>Kevin</td>
+<td class=comp>45890000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>45900000-10000<br>Kevin</td>
+<td class=comp>45910000-20000<br>Kevin</td>
+<td class=comp>45920000-30000<br>Kevin</td>
+<td class=comp>45930000-40000<br>Kevin</td>
+<td class=comp>45940000-50000<br>Kevin</td>
+<td class=comp>45950000-60000<br>Kevin</td>
+<td class=comp>45960000-70000<br>Kevin</td>
+<td class=comp>45970000-80000<br>Kevin</td>
+<td class=comp>45980000-90000<br>Kevin</td>
+<td class=comp>45990000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>46000000-10000<br>Wenjie</td>
+<td class=comp>46010000-20000<br>Wenjie</td>
+<td class=comp>46020000-30000<br>Wenjie</td>
+<td class=comp>46030000-40000<br>Wenjie</td>
+<td class=comp>46040000-50000<br>Wenjie</td>
+<td class=comp>46050000-60000<br>Wenjie</td>
+<td class=comp>46060000-70000<br>Wenjie</td>
+<td class=comp>46070000-80000<br>Wenjie</td>
+<td class=comp>46080000-90000<br>Wenjie</td>
+<td class=comp>46090000-00000<br>Wenjie</td>
+</tr>
+<tr>
+<td class=comp>46100000-10000<br>Wenjie</td>
+<td class=comp>46110000-20000<br>Wenjie</td>
+<td class=comp>46120000-30000<br>Wenjie</td>
+<td class=comp>46130000-40000<br>Wenjie</td>
+<td class=comp>46140000-50000<br>Wenjie</td>
+<td class=comp>46150000-60000<br>Wenjie</td>
+<td class=comp>46160000-70000<br>Wenjie</td>
+<td class=comp>46170000-80000<br>Wenjie</td>
+<td class=comp>46180000-90000<br>Wenjie</td>
+<td class=comp>46190000-00000<br>Wenjie</td>
+</tr>
+<tr>
+<td class=comp>46200000-10000<br>Wenjie</td>
+<td class=comp>46210000-20000<br>Wenjie</td>
+<td class=comp>46220000-30000<br>Wenjie</td>
+<td class=comp>46230000-40000<br>Wenjie</td>
+<td class=comp>46240000-50000<br>Wenjie</td>
+<td class=comp>46250000-60000<br>Wenjie</td>
+<td class=comp>46260000-70000<br>Wenjie</td>
+<td class=comp>46270000-80000<br>Wenjie</td>
+<td class=comp>46280000-90000<br>Wenjie</td>
+<td class=comp>46290000-00000<br>Wenjie</td>
+</tr>
+<tr>
+<td class=comp>46300000-10000<br>Wenjie</td>
+<td class=comp>46310000-20000<br>Wenjie</td>
+<td class=comp>46320000-30000<br>Wenjie</td>
+<td class=comp>46330000-40000<br>Wenjie</td>
+<td class=comp>46340000-50000<br>Wenjie</td>
+<td class=comp>46350000-60000<br>Wenjie</td>
+<td class=comp>46360000-70000<br>Wenjie</td>
+<td class=record title="Class Record 2436=46,370429,986489,274059">46370000-80000<br>Wenjie</td>
+<td class=comp>46380000-90000<br>Wenjie</td>
+<td class=comp>46390000-00000<br>Wenjie</td>
+</tr>
+<tr>
+<td class=comp>46400000-10000<br>Luiz</td>
+<td class=comp>46410000-20000<br>Luiz</td>
+<td class=comp>46420000-30000<br>Luiz</td>
+<td class=comp>46430000-40000<br>Luiz</td>
+<td class=comp>46440000-50000<br>Luiz</td>
+<td class=comp>46450000-60000<br>Luiz</td>
+<td class=comp>46460000-70000<br>Luiz</td>
+<td class=comp>46470000-80000<br>Luiz</td>
+<td class=comp>46480000-90000<br>Luiz</td>
+<td class=comp>46490000-00000<br>Luiz</td>
+</tr>
+<tr>
+<td class=asgn>46500000-10000<br>Douwe</td>
+<td class=asgn>46510000-20000<br>Douwe</td>
+<td class=asgn>46520000-30000<br>Douwe</td>
+<td class=asgn>46530000-40000<br>Douwe</td>
+<td class=asgn>46540000-50000<br>Douwe</td>
+<td class=asgn>46550000-60000<br>Douwe</td>
+<td class=asgn>46560000-70000<br>Douwe</td>
+<td class=asgn>46570000-80000<br>Douwe</td>
+<td class=asgn>46580000-90000<br>Douwe</td>
+<td class=asgn>46590000-00000<br>Douwe</td>
+</tr>
+<tr>
+<td class=comp>46600000-10000<br>Lutz</td>
+<td class=comp>46610000-20000<br>Lutz</td>
+<td class=comp>46620000-30000<br>Lutz</td>
+<td class=comp>46630000-40000<br>Lutz</td>
+<td class=comp>46640000-50000<br>Lutz</td>
+<td class=prog>46650000-60000<br>Lutz</td>
+<td class=asgn>46660000-70000<br>Lutz</td>
+<td class=asgn>46670000-80000<br>Lutz</td>
+<td class=asgn>46680000-90000<br>Lutz</td>
+<td class=asgn>46690000-00000<br>Lutz</td>
+</tr>
+<tr>
+<td class=comp>46700000-10000<br>Daniel</td>
+<td class=comp>46710000-20000<br>Daniel</td>
+<td class=comp>46720000-30000<br>Daniel</td>
+<td class=comp>46730000-40000<br>Daniel</td>
+<td class=comp>46740000-50000<br>Daniel</td>
+<td class=comp>46750000-60000<br>Daniel</td>
+<td class=comp>46760000-70000<br>Daniel</td>
+<td class=comp>46770000-80000<br>Daniel</td>
+<td class=comp>46780000-90000<br>Daniel</td>
+<td class=comp>46790000-00000<br>Daniel</td>
+</tr>
+<tr>
+<td class=comp>46800000-10000<br>AntiRegex</td>
+<td class=comp>46810000-20000<br>AntiRegex</td>
+<td class=comp>46820000-30000<br>AntiRegex</td>
+<td class=comp>46830000-40000<br>AntiRegex</td>
+<td class=comp>46840000-50000<br>AntiRegex</td>
+<td class=comp>46850000-60000<br>AntiRegex</td>
+<td class=comp>46860000-70000<br>AntiRegex</td>
+<td class=comp>46870000-80000<br>AntiRegex</td>
+<td class=comp>46880000-90000<br>AntiRegex</td>
+<td class=comp>46890000-00000<br>AntiRegex</td>
+</tr>
+<tr>
+<td class=comp>46900000-10000<br>Eric</td>
+<td class=comp>46910000-20000<br>Eric</td>
+<td class=comp>46920000-30000<br>Eric</td>
+<td class=comp>46930000-40000<br>Eric</td>
+<td class=prog>46940000-50000<br>Eric</td>
+<td class=prog>46950000-60000<br>Eric</td>
+<td class=prog>46960000-70000<br>Eric</td>
+<td class=asgn>46970000-80000<br>Eric</td>
+<td class=asgn>46980000-90000<br>Eric</td>
+<td class=asgn>46990000-00000<br>Eric</td>
+</tr>
+<tr>
+<td class=comp>47000000-10000<br>Kevin</td>
+<td class=comp>47010000-20000<br>Kevin</td>
+<td class=comp>47020000-30000<br>Kevin</td>
+<td class=comp>47030000-40000<br>Kevin</td>
+<td class=comp>47040000-50000<br>Kevin</td>
+<td class=comp>47050000-60000<br>Kevin</td>
+<td class=comp>47060000-70000<br>Kevin</td>
+<td class=comp>47070000-80000<br>Kevin</td>
+<td class=comp>47080000-90000<br>Kevin</td>
+<td class=comp>47090000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>47100000-10000<br>Kevin</td>
+<td class=comp>47110000-20000<br>Kevin</td>
+<td class=comp>47120000-30000<br>Kevin</td>
+<td class=comp>47130000-40000<br>Kevin</td>
+<td class=comp>47140000-50000<br>Kevin</td>
+<td class=comp>47150000-60000<br>Kevin</td>
+<td class=comp>47160000-70000<br>Kevin</td>
+<td class=comp>47170000-80000<br>Kevin</td>
+<td class=comp>47180000-90000<br>Kevin</td>
+<td class=comp>47190000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>47200000-10000<br>Kevin</td>
+<td class=comp>47210000-20000<br>Kevin</td>
+<td class=comp>47220000-30000<br>Kevin</td>
+<td class=comp>47230000-40000<br>Kevin</td>
+<td class=comp>47240000-50000<br>Kevin</td>
+<td class=comp>47250000-60000<br>Kevin</td>
+<td class=comp>47260000-70000<br>Kevin</td>
+<td class=comp>47270000-80000<br>Kevin</td>
+<td class=comp>47280000-90000<br>Kevin</td>
+<td class=comp>47290000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>47300000-10000<br>Kevin</td>
+<td class=comp>47310000-20000<br>Kevin</td>
+<td class=comp>47320000-30000<br>Kevin</td>
+<td class=comp>47330000-40000<br>Kevin</td>
+<td class=comp>47340000-50000<br>Kevin</td>
+<td class=comp>47350000-60000<br>Kevin</td>
+<td class=comp>47360000-70000<br>Kevin</td>
+<td class=comp>47370000-80000<br>Kevin</td>
+<td class=comp>47380000-90000<br>Kevin</td>
+<td class=comp>47390000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>47400000-10000<br>Kevin</td>
+<td class=comp>47410000-20000<br>Kevin</td>
+<td class=comp>47420000-30000<br>Kevin</td>
+<td class=comp>47430000-40000<br>Kevin</td>
+<td class=comp>47440000-50000<br>Kevin</td>
+<td class=comp>47450000-60000<br>Kevin</td>
+<td class=comp>47460000-70000<br>Kevin</td>
+<td class=comp>47470000-80000<br>Kevin</td>
+<td class=comp>47480000-90000<br>Kevin</td>
+<td class=comp>47490000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>47500000-10000<br>Kevin</td>
+<td class=comp>47510000-20000<br>Kevin</td>
+<td class=comp>47520000-30000<br>Kevin</td>
+<td class=comp>47530000-40000<br>Kevin</td>
+<td class=comp>47540000-50000<br>Kevin</td>
+<td class=comp>47550000-60000<br>Kevin</td>
+<td class=comp>47560000-70000<br>Kevin</td>
+<td class=comp>47570000-80000<br>Kevin</td>
+<td class=comp>47580000-90000<br>Kevin</td>
+<td class=comp>47590000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>47600000-10000<br>Kevin</td>
+<td class=comp>47610000-20000<br>Kevin</td>
+<td class=comp>47620000-30000<br>Kevin</td>
+<td class=comp>47630000-40000<br>Kevin</td>
+<td class=comp>47640000-50000<br>Kevin</td>
+<td class=comp>47650000-60000<br>Kevin</td>
+<td class=comp>47660000-70000<br>Kevin</td>
+<td class=comp>47670000-80000<br>Kevin</td>
+<td class=comp>47680000-90000<br>Kevin</td>
+<td class=comp>47690000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=asgn>47700000-10000<br>Kevin</td>
+<td class=asgn>47710000-20000<br>Kevin</td>
+<td class=asgn>47720000-30000<br>Kevin</td>
+<td class=asgn>47730000-40000<br>Kevin</td>
+<td class=asgn>47740000-50000<br>Kevin</td>
+<td class=asgn>47750000-60000<br>Kevin</td>
+<td class=asgn>47760000-70000<br>Kevin</td>
+<td class=asgn>47770000-80000<br>Kevin</td>
+<td class=asgn>47780000-90000<br>Kevin</td>
+<td class=asgn>47790000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>47800000-10000<br>Kevin</td>
+<td class=comp>47810000-20000<br>Kevin</td>
+<td class=comp>47820000-30000<br>Kevin</td>
+<td class=comp>47830000-40000<br>Kevin</td>
+<td class=comp>47840000-50000<br>Kevin</td>
+<td class=comp>47850000-60000<br>Kevin</td>
+<td class=comp>47860000-70000<br>Kevin</td>
+<td class=comp>47870000-80000<br>Kevin</td>
+<td class=comp>47880000-90000<br>Kevin</td>
+<td class=comp>47890000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>47900000-10000<br>Kevin</td>
+<td class=comp>47910000-20000<br>Kevin</td>
+<td class=comp>47920000-30000<br>Kevin</td>
+<td class=comp>47930000-40000<br>Kevin</td>
+<td class=comp>47940000-50000<br>Kevin</td>
+<td class=comp>47950000-60000<br>Kevin</td>
+<td class=comp>47960000-70000<br>Kevin</td>
+<td class=comp>47970000-80000<br>Kevin</td>
+<td class=comp>47980000-90000<br>Kevin</td>
+<td class=comp>47990000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=comp>48000000-10000<br>Luiz</td>
+<td class=comp>48010000-20000<br>Luiz</td>
+<td class=comp>48020000-30000<br>Luiz</td>
+<td class=comp>48030000-40000<br>Luiz</td>
+<td class=comp>48040000-50000<br>Luiz</td>
+<td class=comp>48050000-60000<br>Luiz</td>
+<td class=comp>48060000-70000<br>Luiz</td>
+<td class=comp>48070000-80000<br>Luiz</td>
+<td class=comp>48080000-90000<br>Luiz</td>
+<td class=comp>48090000-00000<br>Luiz</td>
+</tr>
+<tr>
+<td class=asgn>48100000-10000<br>Daniel</td>
+<td class=asgn>48110000-20000<br>Daniel</td>
+<td class=asgn>48120000-30000<br>Daniel</td>
+<td class=asgn>48130000-40000<br>Daniel</td>
+<td class=asgn>48140000-50000<br>Daniel</td>
+<td class=asgn>48150000-60000<br>Daniel</td>
+<td class=asgn>48160000-70000<br>Daniel</td>
+<td class=asgn>48170000-80000<br>Daniel</td>
+<td class=asgn>48180000-90000<br>Daniel</td>
+<td class=asgn>48190000-00000<br>Daniel</td>
+</tr>
+<tr>
+<td class=asgn>48200000-10000<br>Luiz</td>
+<td class=asgn>48210000-20000<br>Luiz</td>
+<td class=asgn>48220000-30000<br>Luiz</td>
+<td class=asgn>48230000-40000<br>Luiz</td>
+<td class=asgn>48240000-50000<br>Luiz</td>
+<td class=asgn>48250000-60000<br>Luiz</td>
+<td class=asgn>48260000-70000<br>Luiz</td>
+<td class=asgn>48270000-80000<br>Luiz</td>
+<td class=asgn>48280000-90000<br>Luiz</td>
+<td class=asgn>48290000-00000<br>Luiz</td>
+</tr>
+<tr>
+<td class=asgn>48300000-10000<br>AntiRegex</td>
+<td class=asgn>48310000-20000<br>AntiRegex</td>
+<td class=asgn>48320000-30000<br>AntiRegex</td>
+<td class=asgn>48330000-40000<br>AntiRegex</td>
+<td class=asgn>48340000-50000<br>AntiRegex</td>
+<td class=asgn>48350000-60000<br>AntiRegex</td>
+<td class=asgn>48360000-70000<br>AntiRegex</td>
+<td class=asgn>48370000-80000<br>AntiRegex</td>
+<td class=asgn>48380000-90000<br>AntiRegex</td>
+<td class=asgn>48390000-00000<br>AntiRegex</td>
+</tr>
+<tr>
+<td class=open>48400000-10000<br></td>
+<td class=open>48410000-20000<br></td>
+<td class=open>48420000-30000<br></td>
+<td class=open>48430000-40000<br></td>
+<td class=open>48440000-50000<br></td>
+<td class=open>48450000-60000<br></td>
+<td class=open>48460000-70000<br></td>
+<td class=open>48470000-80000<br></td>
+<td class=open>48480000-90000<br></td>
+<td class=open>48490000-00000<br></td>
+</tr>
+<tr>
+<td class=open>48500000-10000<br></td>
+<td class=open>48510000-20000<br></td>
+<td class=open>48520000-30000<br></td>
+<td class=open>48530000-40000<br></td>
+<td class=open>48540000-50000<br></td>
+<td class=open>48550000-60000<br></td>
+<td class=open>48560000-70000<br></td>
+<td class=open>48570000-80000<br></td>
+<td class=open>48580000-90000<br></td>
+<td class=open>48590000-00000<br></td>
+</tr>
+<tr>
+<td class=open>48600000-10000<br></td>
+<td class=open>48610000-20000<br></td>
+<td class=open>48620000-30000<br></td>
+<td class=open>48630000-40000<br></td>
+<td class=open>48640000-50000<br></td>
+<td class=open>48650000-60000<br></td>
+<td class=open>48660000-70000<br></td>
+<td class=open>48670000-80000<br></td>
+<td class=open>48680000-90000<br></td>
+<td class=open>48690000-00000<br></td>
+</tr>
+<tr>
+<td class=open>48700000-10000<br></td>
+<td class=open>48710000-20000<br></td>
+<td class=open>48720000-30000<br></td>
+<td class=open>48730000-40000<br></td>
+<td class=open>48740000-50000<br></td>
+<td class=open>48750000-60000<br></td>
+<td class=open>48760000-70000<br></td>
+<td class=open>48770000-80000<br></td>
+<td class=open>48780000-90000<br></td>
+<td class=open>48790000-00000<br></td>
+</tr>
+<tr>
+<td class=open>48800000-10000<br></td>
+<td class=open>48810000-20000<br></td>
+<td class=open>48820000-30000<br></td>
+<td class=open>48830000-40000<br></td>
+<td class=open>48840000-50000<br></td>
+<td class=open>48850000-60000<br></td>
+<td class=open>48860000-70000<br></td>
+<td class=open>48870000-80000<br></td>
+<td class=open>48880000-90000<br></td>
+<td class=open>48890000-00000<br></td>
+</tr>
+<tr>
+<td class=open>48900000-10000<br></td>
+<td class=open>48910000-20000<br></td>
+<td class=open>48920000-30000<br></td>
+<td class=open>48930000-40000<br></td>
+<td class=open>48940000-50000<br></td>
+<td class=open>48950000-60000<br></td>
+<td class=open>48960000-70000<br></td>
+<td class=open>48970000-80000<br></td>
+<td class=open>48980000-90000<br></td>
+<td class=open>48990000-00000<br></td>
+</tr>
+<tr>
+<td class=asgn>49000000-10000<br>Kevin</td>
+<td class=asgn>49010000-20000<br>Kevin</td>
+<td class=asgn>49020000-30000<br>Kevin</td>
+<td class=asgn>49030000-40000<br>Kevin</td>
+<td class=asgn>49040000-50000<br>Kevin</td>
+<td class=asgn>49050000-60000<br>Kevin</td>
+<td class=asgn>49060000-70000<br>Kevin</td>
+<td class=asgn>49070000-80000<br>Kevin</td>
+<td class=asgn>49080000-90000<br>Kevin</td>
+<td class=asgn>49090000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=asgn>49100000-10000<br>Kevin</td>
+<td class=asgn>49110000-20000<br>Kevin</td>
+<td class=asgn>49120000-30000<br>Kevin</td>
+<td class=asgn>49130000-40000<br>Kevin</td>
+<td class=asgn>49140000-50000<br>Kevin</td>
+<td class=asgn>49150000-60000<br>Kevin</td>
+<td class=asgn>49160000-70000<br>Kevin</td>
+<td class=asgn>49170000-80000<br>Kevin</td>
+<td class=asgn>49180000-90000<br>Kevin</td>
+<td class=asgn>49190000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=asgn>49200000-10000<br>Kevin</td>
+<td class=asgn>49210000-20000<br>Kevin</td>
+<td class=asgn>49220000-30000<br>Kevin</td>
+<td class=asgn>49230000-40000<br>Kevin</td>
+<td class=asgn>49240000-50000<br>Kevin</td>
+<td class=asgn>49250000-60000<br>Kevin</td>
+<td class=asgn>49260000-70000<br>Kevin</td>
+<td class=asgn>49270000-80000<br>Kevin</td>
+<td class=asgn>49280000-90000<br>Kevin</td>
+<td class=asgn>49290000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=asgn>49300000-10000<br>Kevin</td>
+<td class=asgn>49310000-20000<br>Kevin</td>
+<td class=asgn>49320000-30000<br>Kevin</td>
+<td class=asgn>49330000-40000<br>Kevin</td>
+<td class=asgn>49340000-50000<br>Kevin</td>
+<td class=asgn>49350000-60000<br>Kevin</td>
+<td class=asgn>49360000-70000<br>Kevin</td>
+<td class=asgn>49370000-80000<br>Kevin</td>
+<td class=asgn>49380000-90000<br>Kevin</td>
+<td class=asgn>49390000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=asgn>49400000-10000<br>Kevin</td>
+<td class=asgn>49410000-20000<br>Kevin</td>
+<td class=asgn>49420000-30000<br>Kevin</td>
+<td class=asgn>49430000-40000<br>Kevin</td>
+<td class=asgn>49440000-50000<br>Kevin</td>
+<td class=asgn>49450000-60000<br>Kevin</td>
+<td class=asgn>49460000-70000<br>Kevin</td>
+<td class=asgn>49470000-80000<br>Kevin</td>
+<td class=asgn>49480000-90000<br>Kevin</td>
+<td class=asgn>49490000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=asgn>49500000-10000<br>Kevin</td>
+<td class=asgn>49510000-20000<br>Kevin</td>
+<td class=asgn>49520000-30000<br>Kevin</td>
+<td class=asgn>49530000-40000<br>Kevin</td>
+<td class=asgn>49540000-50000<br>Kevin</td>
+<td class=asgn>49550000-60000<br>Kevin</td>
+<td class=asgn>49560000-70000<br>Kevin</td>
+<td class=asgn>49570000-80000<br>Kevin</td>
+<td class=asgn>49580000-90000<br>Kevin</td>
+<td class=asgn>49590000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=asgn>49600000-10000<br>Kevin</td>
+<td class=asgn>49610000-20000<br>Kevin</td>
+<td class=asgn>49620000-30000<br>Kevin</td>
+<td class=asgn>49630000-40000<br>Kevin</td>
+<td class=asgn>49640000-50000<br>Kevin</td>
+<td class=asgn>49650000-60000<br>Kevin</td>
+<td class=asgn>49660000-70000<br>Kevin</td>
+<td class=asgn>49670000-80000<br>Kevin</td>
+<td class=asgn>49680000-90000<br>Kevin</td>
+<td class=asgn>49690000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=asgn>49700000-10000<br>Kevin</td>
+<td class=asgn>49710000-20000<br>Kevin</td>
+<td class=asgn>49720000-30000<br>Kevin</td>
+<td class=asgn>49730000-40000<br>Kevin</td>
+<td class=asgn>49740000-50000<br>Kevin</td>
+<td class=asgn>49750000-60000<br>Kevin</td>
+<td class=asgn>49760000-70000<br>Kevin</td>
+<td class=asgn>49770000-80000<br>Kevin</td>
+<td class=asgn>49780000-90000<br>Kevin</td>
+<td class=asgn>49790000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=asgn>49800000-10000<br>Kevin</td>
+<td class=asgn>49810000-20000<br>Kevin</td>
+<td class=asgn>49820000-30000<br>Kevin</td>
+<td class=asgn>49830000-40000<br>Kevin</td>
+<td class=asgn>49840000-50000<br>Kevin</td>
+<td class=asgn>49850000-60000<br>Kevin</td>
+<td class=asgn>49860000-70000<br>Kevin</td>
+<td class=asgn>49870000-80000<br>Kevin</td>
+<td class=asgn>49880000-90000<br>Kevin</td>
+<td class=asgn>49890000-00000<br>Kevin</td>
+</tr>
+<tr>
+<td class=asgn>49900000-10000<br>Kevin</td>
+<td class=asgn>49910000-20000<br>Kevin</td>
+<td class=asgn>49920000-30000<br>Kevin</td>
+<td class=asgn>49930000-40000<br>Kevin</td>
+<td class=asgn>49940000-50000<br>Kevin</td>
+<td class=asgn>49950000-60000<br>Kevin</td>
+<td class=asgn>49960000-70000<br>Kevin</td>
+<td class=asgn>49970000-80000<br>Kevin</td>
+<td class=asgn>49980000-90000<br>Kevin</td>
+<td class=asgn>49990000-00000<br>Kevin</td>
+</tr>
+<tr bgcolor="#ffffff"><td align=center colspan=10>
+  <table width="90%" cellpadding=4 bgcolor="#000000">
+  <tr class=open><th colspan=4><a name="contrib"></a><b>Contributions by</b></th>
+  <tr class=open><td align=left>Eric</td><td align=left>Eric Roosendaal, Netherlands (author)</td>
+<td align=left>Lutz</td><td align=left>Lutz Nebe, Germany</td></tr>
+  <tr class=open><td align=left>Kevin</td><td align=left>Kevin Hebb, Alberta, Canada</td>
+<td align=left>Wenjie</td><td align=left>Fang Wenjie, China</td></tr>
+  <tr class=open><td align=left>Luiz</td><td align=left>Luiz Antonio Souza, Brazil</td>
+<td align=left>Daniel</td><td align=left>Daniel Podobinski</td></tr>
+  <tr class=open><td align=left>AntiRegex</td><td align=left>AntiRegex</td>
+<td align=left>Douwe</td><td align=left>Hummeling</td></tr>
+  </table>
+</td></tr>
+</table>
+<p align=center style="font-family:verdana,times,arial; font-size:10pt">
+Back to the <a href="index.html">general 3x+1 page</a>.
+</body>
+</html>

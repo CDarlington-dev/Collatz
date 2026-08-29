@@ -1,0 +1,7 @@
+/.lake/
+/.tooling/
+/.cache/
+/build/
+__pycache__/
+*.pyc
+

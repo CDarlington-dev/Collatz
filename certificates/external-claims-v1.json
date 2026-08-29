@@ -1,0 +1,68 @@
+{
+  "schema": "collatz-external-claims-v1",
+  "as_of": "2026-08-26",
+  "warning": "These are explicit hypotheses. This file records provenance but is not a proof of exhaustive coverage.",
+  "claims": [
+    {
+      "id": "rt-finite-base",
+      "kind": "finite-search-completeness",
+      "upper": "1000000000",
+      "paradoxical_segment_count": "593",
+      "max_start": "4614",
+      "max_length": "92",
+      "source": "https://arxiv.org/html/2502.00948v5",
+      "archived_sha256": "7a3c293e0fc9036d6b4670dd9a497e9acbae668c2f49ad86edf34ab27bdc8607"
+    },
+    {
+      "id": "rt-delay-coverage",
+      "kind": "col-delay-bound",
+      "upper": "28019077177231758495",
+      "max_delay": "2456",
+      "source": "http://www.ericr.nl/wondrous/delrecs.html",
+      "raw_table": "http://www.ericr.nl/wondrous/delays.txt",
+      "raw_table_sha256": "f168da1b973c5ab44fff60144cb8248f8732ccb9529fec5638e8c36251d01507"
+    },
+    {
+      "id": "current-delay-coverage",
+      "kind": "col-delay-bound",
+      "reported_boundary": "46500000000000000000",
+      "upper": "46499999999999999999",
+      "max_delay": "2480",
+      "basis": "the main status page explicitly reports class-record coverage through 46.5 x 10^18; the progress grid covers coordinates through 46,500,000 in units of 10^12; the confirmed table ends at 2456 and the progress log reports one possible, still-unconfirmed delay-2480 record, so 2480 is used as the conservative cap",
+      "definitions_source": "http://www.ericr.nl/wondrous/",
+      "definitions_archived_sha256": "4bf0c36bf4d779f4f09814d742c2d4d5b40c26c1120a066636d1449a28a567f5",
+      "progress_source": "http://www.ericr.nl/wondrous/progress.html",
+      "progress_archived_sha256": "64b42e1ad232e7748f5bfedd6e230b0233b47827e62e9428a40b403dc846dcd2",
+      "delay_source": "http://www.ericr.nl/wondrous/delrecs.html",
+      "delay_page_archived_sha256": "59dd4ca4d14e5a90d9d881f90bef1782638b229fc233e8a0f051da3919436964",
+      "note": "This remains an external completeness hypothesis. The right grid boundary is treated as exclusive, so the Lean theorem uses boundary minus one. Using delay 2456 would require knowing that the unconfirmed candidate lies beyond the covered range; the theorem deliberately assumes only 2480."
+    },
+    {
+      "id": "base-excursion-envelope",
+      "kind": "accelerated-excursion-inverse",
+      "threshold": "1000000000",
+      "first_start_reaching_above_threshold": "113383",
+      "predecessor_record_start": "77671",
+      "source": "http://www.ericr.nl/wondrous/pathrecs.html"
+    },
+    {
+      "id": "rt-second-excursion-envelope",
+      "kind": "accelerated-excursion-inverse",
+      "threshold": "28019077177231758495",
+      "first_start_reaching_above_threshold": "23035537407",
+      "predecessor_record_start": "12327829503",
+      "source": "http://www.ericr.nl/wondrous/pathrecs.html",
+      "path_page_archived_sha256": "276e6d504c51043477dadce9976f31d1055475499e901c8c2f4829edf0b53591"
+    },
+    {
+      "id": "current-excursion-envelope",
+      "kind": "accelerated-excursion-inverse",
+      "threshold": "46499999999999999999",
+      "first_start_reaching_above_threshold": "51739336447",
+      "predecessor_record_start": "45871962271",
+      "source": "http://www.ericr.nl/wondrous/pathrecs.html",
+      "path_page_archived_sha256": "276e6d504c51043477dadce9976f31d1055475499e901c8c2f4829edf0b53591"
+    }
+  ],
+  "transport_note": "The primary record site presented an SNI/certificate-name error on 2026-08-26. Archived hashes were obtained over the HTTP URLs used by the paper; they identify the retrieved bytes but do not authenticate the mutable site."
+}

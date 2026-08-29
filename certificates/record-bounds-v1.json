@@ -1,0 +1,20 @@
+{
+  "schema": "collatz-record-bounds-v1",
+  "claims": [
+    {
+      "id": "base-excursion-envelope-local",
+      "map": "accelerated-collatz-even-half-odd-3n-plus-1-half",
+      "domain_start": "0",
+      "domain_stop_inclusive": "113382",
+      "convergence_target": "1",
+      "maximum_state": "785412368",
+      "least_start_attaining_maximum": "77671",
+      "strict_threshold": "1000000000",
+      "maximum_accelerated_delay": "223",
+      "maximum_col_delay": "353",
+      "finite_certificate_manifest": "certificates/finite-113382/manifest.json",
+      "finite_certificate_manifest_sha256": "1a3f10d5aec9c1eb61fd19185f98a0c181eca1b4912d1ca3705be7ce19bc86fd",
+      "hits_sha256": "9a4db72c9c5ab79eda689f42a15d92ed5100abceee566442b9579a0894d0a37a"
+    }
+  ]
+}

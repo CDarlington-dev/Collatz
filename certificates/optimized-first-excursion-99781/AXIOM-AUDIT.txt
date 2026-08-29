@@ -1,0 +1,11 @@
+'Collatz.Certified.Finite.optimizedFirstExcursionIntervalCheck_sound' depends on axioms: [propext, Quot.sound]
+'Collatz.Certified.Finite.firstDescentExcursionCheck_sound' depends on axioms: [propext, Quot.sound]
+'Collatz.Certified.Finite.optimizedFirstExcursion_fuel134_fails_closed' does not depend on any axioms
+'Collatz.Certified.Finite.optimizedFirstExcursion_fuel135_accepts_extremal' does not depend on any axioms
+'Collatz.Certified.Finite.optimizedFirstExcursion_peak' does not depend on any axioms
+'Collatz.Certified.Finite.optimizedFirstExcursionBlock000_true' does not depend on any axioms
+'Collatz.Certified.Finite.optimizedFirstExcursionTail_true' does not depend on any axioms
+'Collatz.Certified.Finite.optimizedFirstExcursionAllBlocksCheck_true' depends on axioms: [propext, Quot.sound]
+'Collatz.Certified.Finite.optimizedFirstExcursionChecks_sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Collatz.Certified.Finite.optimizedFirstExcursionEnvelope_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Collatz.Certified.Finite.optimizedFirstExcursionThresholdExact_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,858 @@
+<!doctype html>
+<html>
+<head>
+<title>On The 3x + 1 Problem</title>
+<meta name="description" content="The 3x+1 (or Collatz) sequences and their properties" />
+<meta name="keywords" content="Mathematics, Collatz, algorithms, 3x+1, 3n+1, conjecture" />
+<meta name="keywords" content="delay, glide path, record, residue, completeness" />
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<link rel="shortcut icon" href="favicon.ico" />
+<link type="text/css" rel="stylesheet" href="wondrous.css" />
+<style type="text/css">
+body  {max-width: 72em; }
+.mainpageheader { font-family:arial,serif; font-size:32px; text-decoration:underline;
+                   color:#000099; font-weight:bold; text-align:center;}  
+.author         { font-family:arial,serif; font-size:18px; text-align:center;}  
+dd              { font-family:verdana; font-size:17px; line-height:130%; }
+table#tblstatus tr td { padding:1px 5px 2px 5px; white-space:nowrap; }
+aside#pathreccheck { float:right;max-width:400px; min-width:380px; border:#ffbb00 6px solid; 
+                     background-color:#ccddff; font-size:90%; font-family:Tahoma;
+                     margin:1.4em 0 0 0; padding:0.5em 1.2em 0.5em 1.2em; }
+body   { margin-left:2vw; margin-right:1vw; min-width:840px; }                     
+div.maintext br {margin-bottom:0.4em; }
+#tblstatus tr td:nth-of-type(n+2) {text-align:right;}
+</style>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"> </script>
+<script>
+  MathJax = {
+   tex: {
+      inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+      displayMath: [ ["$$","$$"], ["\\[","\\]"] ],
+      processEscapes: true
+    }
+  };
+  function start() {
+    let request = new XMLHttpRequest()
+    request.onreadystatechange = function () {
+      if( this.readyState == 4 && this.status == 200 ) {
+        let data = this.responseText
+        let dbdata = JSON.parse(data)
+        let dblimit = dbdata.verified_up_to_times_2_60
+        let dbd = dbdata.generated.split(",")[1].split(" ")
+        document.getElementById('dbcurr').innerText = `${dbd[2]} ${dbd[1]} ${dbd[3]}`
+        document.getElementById('dblim').innerText = `$${dblimit} . 2^{60}$`
+        MathJax.typeset()
+      }
+    }
+    request.open('get', 'https://pcbarina.fit.vutbr.cz/json.php')
+    request.send()
+}
+</script>
+</head>
+
+<body onload="start()">
+
+<p class="mainpageheader">On the 3x + 1 problem</p>
+<p style="text-align:center;" class="author"> By&nbsp;
+<script type='text/javascript'>
+  var v2="DZS6BPXJ2TPFY";var v7=unescape("%21%28%3AU%025*%23Q%26%7E%285");
+  var v5=v2.length;var v1="";
+  for(var v4=0;v4<v5;v4++){ 
+  v1+=String.fromCharCode(v2.charCodeAt(v4)^v7.charCodeAt(v4));}
+  document.write('<a href="javascript:void(0)" onclick="window.location=\'mail\u0074o\u003a'+v1+'?subject=3x%2b1 problem'+'\'">'+'Eric Roosendaal<\/a>');
+</script></p>
+
+  <p class="maintext">
+  <b>SUMMARY:</b> <i>The so-called 3x+1 problem is to prove that all 3x+1 
+  sequences eventually converge. The sequences themselves however and their
+  lengths display some interesting properties and raise unanswered questions. 
+  These pages supply numerical data and propose some conjectures 
+  on this innocent looking problem.</i><br><br>
+  </p>
+<hr class="line" />
+<div class="maintext">
+  <aside id="pathreccheck">
+  <div style="text-align:center; font-size:22px;font-weight:bold;margin:0.4em;font-family:verdana;">Convergence</div>
+  In 2017 the yoyo@home project checked all numbers up to $87 . 2^{60}$ 
+  <span class="nobreak">(~ $1.003E+20$)</span> for convergence. 
+  <br>During this process four new path records were found.
+  <p>From 2019 <a href="https://pcbarina.fit.vutbr.cz/">David Bařina</a> is checking
+     numbers (as of <span id=dbcurr></span> up to <span id=dblim></span>) and he has discovered 
+     five more path records. 
+  <p style="text-align:justify; margin-top:1em;">A complete list of Path records is on the
+  <a href="pathrecs.html">Path records page</a></p>
+  </aside>
+<div style="white-space:nowrap;line-height:130%;margin-left:1em;" >
+This page contains the following sections:
+</div>
+<ul type="square">
+<li><a href="#part1">Definition of the problem</a>
+<li><a href="#part2">The Glide</a>
+<li><a href="#part3">Delay and Residue</a>
+<li><a href="#part4">Completeness and Gamma</a>
+<li><a href="#part5">Class Records</a>
+<li><a href="#part6">Strength and Levels</a>
+<li><a href="#part7">Path Records</a>
+<li><a href="#part8">Links to related pages</a>
+<li><a href="#status">Current status of the problem</a>
+<li>Join the <a href="#search">distributed search</a> for new class records! 
+<li>Watch the <a href="progress.html">progress</a> of the distributed search project
+<li>Find pages quickly on the <a href="sitemap.html">Site Map</a>
+</ul>
+
+</div>
+
+<p class=maintext>
+<i>This page was last modified on June 30 2026</i><br>
+</p>
+<hr class=line>
+
+<a id=part1></a>
+
+<div class="header">Introduction and definitions</div>
+<div class="maintext">
+For any positive integer N a sequence <span style="font-family:monospace">S<sub>i</sub></span> can be defined by putting
+<div style="margin-left:6em; margin-bottom:0.7em; text-align:left;">
+       &nbsp;<div style="font-family:monospace">S<sub>0</sub> = N</div>
+     &nbsp;&nbsp;and for all <span style="font-family:monospace">i &gt; 0: </span><br>
+       <table style="margin-left:0em; font-size:inherit"><tr><td><span style="font-family:monospace">S<sub>i</sub> = S<sub>i-1</sub> / 2</span> </td>
+              <td style="padding-left:4em">if <span style="font-family:monospace">S<sub>i-1</sub></span> is even<br></td></tr>
+       <tr><td><span style="font-family:monospace">S<sub>i</sub> = S<sub>i-1</sub> * 3 + 1</span></td>
+              <td style="padding-left:4em">if <span style="font-family:monospace">S<sub>i-1</sub></span> is odd<br></td></tr></table> 
+</div>
+
+This latter formula usually gives the sequence its name, 
+the <b>3x + 1</b> problem, sometimes also referred to as the Collatz problem, 
+the Syracuse problem or some other name.
+Thus for N = 13 we find
+<div class="preformat" style="margin-bottom:0.7em;">
+   S<sub>0</sub>  = 13, S<sub>1</sub>  = 40, S<sub>2</sub>  = 20, S<sub>3</sub>  = 10, S<sub>4</sub>  =  5
+   S<sub>5</sub>  = 16, S<sub>6</sub>  =  8, S<sub>7</sub>  =  4, S<sub>8</sub>  =  2, S<sub>9</sub>  =  1, S<sub>10</sub> =  4 
+</div>
+and from now on the sequence will repeat itself.
+
+<div style="font-style:italic; margin-top:1em; margin-bottom:1.4em;" >
+Note : although the sequence is equally well defined when the process is 
+applied to negative integers this page deals with 
+<b>positive</b> integers only, also known as the Natural Numbers.
+Therefore all results on this page shall always be understood to refer to 
+natural numbers only.
+</div>
+
+We now define 
+<dl>
+<dt class="define">Mx(N)</dt>
+<dd>Mx(N) = lim k &rarr; &infin; Max(S<sub>0</sub>,
+S<sub>1</sub>, ..., S<sub>k</sub>)</dd>
+<dt class="define">Mn(N)</dt>
+<dd>Mn(N) = lim k &rarr; &infin; Min(S<sub>0</sub>,
+S<sub>1</sub>, ..., S<sub>k</sub>)
+</dd></dl>
+
+Thus we will call any positive integer
+<dl>
+<dt class=define>Convergent</dt>
+<dd>if Mn(N) = 1</dd>
+<dt class=define>Divergent</dt>
+<dd>if Mx(N) does not exist</dd>
+<dt class=define>Cyclic</dt>
+<dd>otherwise</dd>
+</dl>
+
+No positive integer N is known which may possibly be divergent, and we therefore
+reach the widely believed yet still unproven:
+<br>
+<br>
+
+<dl>
+<dt class="conject">Conjecture 1a : <span class=nothing>(weak 3x+1 conjecture)</span></dt>
+<dd>No integer N is divergent.
+</dd></dl>
+Serious indications exist however that no other cycle but the simple 4-2-1
+cycle exists. In fact it is already known that any other cycle must
+contain at least a very large number of elements. 
+See the <a href="cycles.html">cycles</a> page to find out the exact numbers
+and how they follow from the current status of the problem.
+<br><br>It is therefore not unreasonable to state 
+<br>
+<dl>
+<dt class=conject>Conjecture 1b : <span class=nothing>(strong 3x+1 conjecture)</span></dt>
+<dd>All positive integers N are convergent.
+</dd></dl>
+
+This conjecture remains unproven to this day. 
+
+<p>
+While most authors on the subject have concerned themselves mainly with proving 
+conjecture 1b, on these pages we will from here on assume that conjecture 1b holds 
+and look into a number of other properties of the 3x+1 sequences.
+
+</div>
+<hr class=line>
+<!-- - - - - - - - - - - - - - - - - - - -->
+
+<a id="part2"></a>
+<div class="header">The Glide </div>
+
+<div class="maintext">
+<dl>
+<dt class="define">Glide</dt>
+<dd>for any positive integer N &gt; 1 let k be the lowest index for which
+S<sub>k</sub> &lt; N.<br>
+We shall call k the <b>Glide</b> of N and write this as G(N).
+</dd></dl>
+
+<br>
+
+Calculating the Glide for any positive integer is tantamount to showing it is 
+convergent, as long as all smaller numbers are known to be convergent as well.
+<br>
+Thus we may restate conjecture 1b as follows:
+<br>
+<dl>
+<dt class="conject">Conjecture 1b : <span class=nothing> (strong 3x+1 conjecture, restated)</span></dt>
+<dd> All positive integers N &gt; 1 have a finite Glide
+</dd></dl>
+
+This conjecture is obviously unproven as well.
+However <b>Terras</b> proved a very important though weaker theorem:
+
+<dl>
+<dt class="theorem">Theorem (Terras) :</dt>
+<dd> Almost all positive integers N have finite Glide.
+</dd></dl>
+
+For an informal proof of this theorem look at the <a href="terras.html">Terras theorem page</a>
+
+<p>
+It may not be immediately obvious from the definition of the sequence that
+arbitrarily high Glides must exist. But observe that any number of the form
+$N = 2^{p}-1$ with $p &gt; 1$ will have $S_{2}=3 * 2^{p-1} - 1$ and, since 
+$S_2$ is odd: $S_4=3 * 3 * 2^{p-2}-1$ and eventually $S_{2p}=3^{p}-1$.
+<br>Hence $S_i$ will not be below $N$ for at least $2p$, and therefore $G(N) &gt; 2p$.
+
+<p>
+Although Glides are thus unbounded it is a far different proposition to find 
+the smallest number for which $G(N) \gt k$.  
+for any given $k$. 
+</p>
+<dl>
+<dt class="define">Glide Record</dt>
+<dd>a positive integer N is called a <b>Glide Record</b><br>
+if for all $M \lt N$  we have $G(M) \lt G(N)$<br>
+</dd></dl>
+
+Skipping the trivial numbers 1 and 2 the first Glide Records are
+<div class="preformat">   N =   3   G(N) =   6
+   N =   7   G(N) =  11
+   N =  27   G(N) =  96
+   N = 703   G(N) = 132
+</div>
+and so on. 
+
+The author calculated Glides over a substantial interval, 
+and the Glide Records found so far are given in the
+<a href="glidrecs.html">Glide Records Table</a>.
+</div>
+
+<hr class="line" />
+
+<!-- - - - - - - - - - - - - - - - - - - -->
+
+<a id="part3"></a>
+<div class="header">Delay and Residue</div>
+
+<div class="maintext">
+<dl>
+<dt class="define">Delay</dt>
+<dd>for any positive integer N let k be the lowest index for which
+$S_k = 1$.<br>
+We shall call k the <b>Delay</b> of N and write this as $D(N)$.
+</dd></dl>
+
+<dl>
+<dt class="define">Delay Record</dt>
+<dd>A positive integer N is called a <b>Delay Record</b><br>
+if for all $M \lt N$ we have $D(M) \lt D(N)$.
+</dd></dl>
+
+Lengthy calculations have been made in trying to find Delay Records. 
+<br>
+All currently known Delay Records are given in the 
+<a href="delrecs.html">Delay Records Table</a>.
+<p>
+<i>Note: to calculate the delay of any number yourself, try the <a href="showsteps.html">3x + 1 calculator page</a></i>.
+<br>
+<dl>
+<dt class="define">Residue</dt>
+<dd>for any positive integer $N$ let $E(N)$ and $O(N)$ denote the number of
+elements from $S_0$ to <span class="nobreak">$S_{D(N)-1}$</span> which are even or odd, 
+respectively.  Obviously <span class="nobreak">$O(N) + E(N) = D(N)$</span>.<br>
+Now due to the construction of the sequence we may write<br>
+<div style="padding-left:3em;padding-top:0.4em;padding-bottom:0.3em">
+  $2^{E(N)} = 3^{O(N)} * N * Res(N)$ </div>
+where $Res(N)$ is a factor equal to the product of<br>
+<span class="nobreak">$(1 + 1 / ( 3 * S_i ) )$ </span>
+taken over the odd elements $S_i$ for $0 &le; i \lt D(N)$. <br>
+We will call $Res(N)$ the <b>Residue</b> of N.
+</dd></dl>
+It turns out that $Res(N)$ is usually small and typically lies 
+between 1.10 and 1.25. Therefore it appears reasonable to propose<br>
+<dl>
+<dt class="conject">Conjecture 2a : <span class=nothing>(weak residue conjecture)</span></dt>
+<dd>A number $Res_{max}$ exists such that for every positive integer<br> 
+<div style="padding-left:3em;padding-top:0.4em">
+  $Res(N) \lt Res_{max}$.</div>
+</dd></dl>
+There are serious indications though that a much more explicit
+conjecture can be made: <br><br>
+<dl>
+<dt class="conject">Conjecture 2b : <span class=nothing>(strong residue conjecture)</span></dt>
+<dd>For all $N : Res(N) &le; Res(993)$.</dd>
+</dl>
+For the evidence to support this conjecture look at the
+<a href="residues.html">residues page</a>.
+<br>
+Whether conjecture 2b is true or not, we will from now on assume that at 
+least conjecture 2a holds, and also that <span class="nobreak">$Res_{max} \ll 6$.</span>
+</div>
+<hr class="line" />
+
+<!-- - - - - - - - - - - - - - - - - - - -->
+<a id="part4"></a>
+<div class="header">Completeness</div>
+
+<div class="maintext">
+<dl>
+<dt class="define">Completeness</dt>
+<dd>for all integers $N \gt 1$ the <b>Completeness</b>
+of N, C(N), is defined by <span class="nobreak">$C(N) = O(N) / E(N)$</span>.
+</dd></dl>
+
+
+<dl>
+<dt class="theorem">Theorem 1 :</dt>
+<dd>For all $N \gt 1: C(N) \lt ln(2)/ln(3) = 0.63092975...$</dd>
+<dt class="theorem">Proof :</dt>
+<dd>From the previous paragraph we had, by definition 
+<br>&nbsp;&nbsp;&nbsp;$2 ^E(N) = 3 ^O(N) * N * Res(N)$
+<br>Taking the logarithm and regrouping yields
+<br>&nbsp;&nbsp;&nbsp;$O(N) / E(N) = ln(2) / ln(3) - (ln(N) + ln(Res(N))) / (E(N).ln(3) )$
+<br>The final term is often small, but always $\gt 0$.
+</dd></dl>
+
+This leads to the rather more complex question of how close C(N) can
+get to its theoretical limit. If the final term could get infinitesimally close to 
+zero then the completeness would get infinitesimally close to this limit.
+For large N the final term is proportional to <span class="nobreak">ln(N) / E(N)</span>. 
+The reciprocal of this quantity is usually defined as <b>Gamma</b>.
+
+<dl>
+<dt class="define">Gamma</dt>
+<dd>for all integers $N \gt 1$ <b>Gamma(N)</b>
+is defined by <span class="nobreak">$E(N) / ln(N)$</span>.
+</dd></dl>
+
+There is ample evidence to suggest that Gamma(N) will <i>not</i> reach
+arbitrary large values, and so we reach
+<br>
+<dl>
+<dt class="conject">Conjecture 3 :</dt>
+<dd>A number $C _{max}$ exists such that 
+for all <span class="nobreak">$N \lt 1 : C(N) \lt C _{max}$</span>.
+<br>with <span class="nobreak">$C _{max} \lt ln(2) / ln(3)$</span>.
+</dd></dl>
+
+Or, in simpler terms: C(N) will <b>not</b> get infinitesimally 
+close to its theoretical limit. For the evidence to support this 
+conjecture look at the <a href="compness.html">completeness page</a>.
+<br>
+
+<dl>
+<dt class="define">Completeness Record</dt>
+<dd>A number $N \gt 1$ is called a <b>Completeness Record</b><br>
+if for all $M \lt N$ we have $C(M) \lt C(N)$.
+</dd></dl>
+
+Similarly we have
+<br>
+
+<dl>
+<dt class="define">Gamma Record</dt>
+<dd>A number $N \gt 1$ is called a <b>Gamma Record</b><br>
+if for all $M \lt N$ we have $Gamma(M) \lt Gamma(N)$.
+</dd></dl>
+
+From the similarity of their definitions it should come as no surprise that 
+the tables of known Completeness and Gamma records are virtually the same.
+<br><br>
+All Completeness and Gamma Records currently known are given in the
+<a href="comprecs.html">Completeness and Gamma Records Table</a>.
+</div>
+<hr class="line" />
+<!-- - - - - - - - - - - - - - - - - - - -->
+
+<a id="part5"></a>
+<div class="header">Class Records</div>
+
+<div class="maintext">
+<p>
+Assuming Conjecture 1b holds we can partition the positive integers into
+Delay Classes $DC _k (k=0,1,2,3...)$ where an integer $N$ is said
+to belong to class $D(N)$. 
+<p>
+We note that no class is empty as for <span class="nobreak">$N = 2^k$</span> 
+we have <span class="nobreak">$D(N) = k$.</span>
+</p>
+<dl>
+<dt class="define">Class Record</dt>
+<dd>The lowest element of a Delay Class $DC_k$
+is called its <b>Class Record</b>, indicated by $R_k$.
+</dd></dl>
+
+<br>
+Class Records of consecutive classes are often 'related',
+the lower one occurring in the sequence of the higher one.
+<br>Assuming Conjecture 2a holds, with $Res_{max} \lt 6$ we have:
+<dl>
+<dt class="theorem">Theorem 2 :</dt>
+<dd>Let $R_k$ and $R_{k+1}$ be the records of 
+Delay Classes $k$ and $k+1$, respectively.
+<br>Then $O(R_k) \le O(R_{k+1})$
+and $E(R_k) \le E(R_{k+1})$.</dd>
+<dt class="theorem">Proof :</dt>
+<dd>Let $R_k$ and $R_{k+1}$ be the records of classes $k$ and $k+1$ respectively.
+<br>Assume $O(R_k) - O(R_{k+1}) = x$, 
+$x \gt 0$. 
+Then $R_{k+1} / R_k$ is equal to 
+$2^{x+1} * 3^x * Res(R_k) / Res(R_{k+1})$
+which for positive $x$ is definitely $\gg 2$.
+<br>Since $N = 2 * R_k$ has a delay of 
+$k + 1$ and is smaller than $R_{k+1}$, 
+this would imply that $R_{k+1}$ would be no class record.<br>
+Therefore $O(R_k) \le O(R_{k+1})$.
+<p>
+Assume that $E(R_k) - E(R_{k+1}) = x$, $x \gt 0$. 
+Then $R_k / R_{k+1}$ 
+is equal to $2^x * 3^{x+1} * Res(R_{k+1}) / Res(R_k)$
+which for positive <i>x</i> is definitely $\gg 3$. 
+<br>Since either $N = 3 * R_{k+1} + 1$ or $N = R_{k+1} / 2$ has delay $k$, 
+and both are smaller than $R_k$ this would imply that $R_k$ would be no class record.
+<br>Therefore $E(R_k) \le E(R_{k+1})$.
+</dd></dl>
+
+From the above result we may easily derive
+<dl>
+<dt class="theorem">Theorem 3 :</dt>
+<dd>Let $N$ be any Completeness Record.<br>
+Then $N$ is a Class Record as well.</dd>
+<dt class="theorem">Proof :</dt>
+<dd>Assume a number $M \lt N$ exists with $D(M) = D(N)$.<br>
+
+<br>&nbsp;&bull;&nbsp;&nbsp;If $O(M) = O(N)$, and thus $E(M) = E(N)$, 
+then $C(M) = C(N)$ and thus $N$ would be no Completeness Record. 
+<br>&nbsp;&bull;&nbsp;&nbsp;If $O(M) \gt O(N)$ then $C(M) \gt C(N)$ and again 
+$N$ would be no Completeness Record.
+<br>&nbsp;&bull;&nbsp;&nbsp;Finally if $O(M) \lt O(N)$ then, still assuming
+conjecture 2a holds, $M$ would not be $ \lt N$. 
+Therefore such an $M$ does not exist and $N$ is therefore a Class Record.<br>
+</dd></dl>
+
+Theoretically a Completeness Record does not necessarily have to be a Delay Record as well,
+since a lower number with a higher Delay but lower Completeness might exist. 
+All currently known Completeness Records are Delay Records as well though.
+
+<p>
+As of October 2024 all class Records up to 2318 are known.
+
+<p>
+A complete list of known Class Records can be found in the
+<a href="classrec.html">Class Records Table</a>.
+</p>
+</div>
+<hr class="line" />
+<!-- - - - - - - - - - - - - - - - - - - -->
+
+<a id="part6"></a>
+<div class="header">Strength and Levels</div>
+
+<div class="maintext">
+<p>
+If Conjecture 2a holds, with $Rmax \ll 6$, this also implies that 
+the elements of a Delay Class occur at discrete levels, 
+which roughly lie a factor 6 apart.
+The elements of class 13 for example are 34, 35, 192, 208, 212, 213, 226,
+227, 1280, 1344, 1360, 1364, 1365 and 8192. The grouping into four 
+different "subclasses" is obvious.
+<br>
+In order to work with levels we first define a more basic parameter called the Strength:
+</p>
+<dl>
+<dt class="define">Strength</dt>
+<dd>For all positive integers $N$ with $D(N) = k$
+the <b>Strength</b> $S(N)$ is defined by
+<br>$S(N) = 5 * O(N) - 3 * E(N)$.
+</dd></dl>
+
+The Strength of most numbers is well below zero, and positive Strengths are quite rare.
+It would appear though that arbitrarily high Strengths should exist. 
+
+<dl>
+<dt class="define">Strength Record</dt>
+<dd>A positive integer $N$ is called a <b>Strength Record</b><br>
+if for all $M \lt N$ we have $S(M) \lt S(N)$.
+</dd></dl>
+
+Strength records are quite rare. Only five non-trivial records are known, and the highest one
+of those has 18 digits already. They can be found on the <a href="strengths.html">Strength page</a>
+together with a few numbers that are currently the best known candidates for the next records.
+
+<br>
+Based on the Strength it is easy to define the Level. Note that for all numbers
+$N$ with $D(N) = k$ we have necessarily 
+$S(N) \equiv 5k (mod 8)$
+<br>
+<dl>
+<dt class="define">Level</dt>
+<dd>For all positive integers $N$ with $D(N) = k$
+the <b>Level</b> $L(N)$ is defined by
+<br>$L(N) = - [S(N) / 8 ]$
+<br>(where $[x]$ is meant to be the largest integer $&le; x$)
+</dd></dl>
+
+Thus $S(34) = 5 * 3 - 3 * 10 = -15$. Therefore 
+$L(34) = -[-15/8] = 2$
+Similarly $L(192) = 3$, $L(1280) = 4$ and $L(8192) = 5$.
+For any delay $k$ the highest possible level occurs at $N = 2^k$, as
+this is the highest number with this delay.
+Level 0 can be seen as the highest level for which $C(N) &ge; 0.60$.
+<p>
+With lower numbers the 'limited availability' of numbers makes statistics a risky approach, but 
+with higher numbers we may say that the level yields information about the relative 'exclusiveness' 
+of the record. From a statistical point of view with levels 'close to 0' we find that the lower the 
+level, the less numbers are found at that level. Although numbers with negative levels do exist they 
+are quite rare. The <i>only</i> number below $10\,000\,000\,000$ for which $L(N) \lt 0$ 
+occurs at $N = 63\,728\,127$, for which $L(N) = -1$.
+<p>
+The next ones are $L(12\,235\,060\,455) = -1$  $(D(N) = 1184)$ and $L(13\,371\,194\,527) = -1$ 
+$(D(N) = 1210)$. Up to $21\,000\,000\,000$ three more level -1 numbers exist, but then 
+surprisingly the next one does not appear until $R_{1408} = 1\,444\,338\,092\,271$, 
+a number almost 70 times larger than its predecessor. Only 9 numbers of level -1 exist before the 
+first number of level -2 occurs: $R_{1549} = 3\,743\,559\,068\,799$. This number shows 
+a surprisingly high delay, surpassing the previous Delay Record by no less than over one hundred.
+<p>
+Up to $100\,000\,000\,000\,000 (10^{14})$ one finds approximately 100 numbers of 
+level -1 and just a single one of level -2, which gives a fair indication of their rarity. 
+Thus it is rather unexpected the first number of level -3 is found just outside this interval 
+at $N = 100\,759\,293\,214\,567$. With a Delay of $1820$ this number is
+not only a Delay Record, surpassing the previous record with no fewer than 158 steps, but a Strength
+and Completeness Record as well. Remarkably a further level -3 number pops up almost immediately as 
+$R_{1789}$ is found at $N = 104\,797\,092\,792\,063$.
+<p>
+A total of 15 level -3 numbers exist between $100 * 10^{12}$ and $531 * 10^{12}$, 
+but no others appear quickly thereafter. In fact no further level -3 numbers exist below $10^{16}$.
+The next one is $N = 12\,769\,884\,180\,266\,527$, over 20 times larger than
+the previous one. 
+<p>
+Still lower levels are ever harder to come by. As the numbers increase searches become slower and search
+intervals get wider. The lowest level -4 number, now confirmed as a Delay and Strength record, has 18 
+digits. The smallest number of level -5 found so far has 21 digits and the lowest number currently
+known of level -10 has no less than 36 digits.
+</div>
+<hr class="line" />
+<!-- - - - - - - - - - - - - - - - - - - -->
+
+<a id="part7"></a>
+<div class="header">Path records and Expansion</div>
+
+<div class="maintext">
+<p>
+Any positive integer N can be completely defined by the delay, the level and the residue, i.e. from these 
+three data N can be calculated exactly. None of these however give any information about the path of the
+sequence $S_i$. In particular no information is available of $Mx(N)$, the highest number occurring in 
+the 3x+1-sequence. This number is of practical importance as well, since it indicates the minimum number
+of bits needed for a computer algorithm to calculate a particular sequence without overflows occurring.
+<p>
+<i>Note: to calculate the maximum of any number yourself, try the <a href="showsteps.html">3x + 1 calculator page</a></i>.
+
+<dl>
+<dt class="define">Path Record</dt>
+<dd>a positive integer $N$ is called a <b>Path Record</b><br>
+if for all $M \lt N$  we have $Mx(M) \lt Mx(N)$
+</dd></dl>
+
+The first Path Records are
+<div class="preformat">
+   $N =  2$     $Mx(N) =    2$
+   $N =  3$     $Mx(N) =   16$
+   $N =  7$     $Mx(N) =   52$
+   $N = 15$    $Mx(N) =  160$
+   $N = 27$    $Mx(N) = 9232$
+</div>
+<p>
+and so on. Path records can be conveniently numbered in the order in 
+which they occur. Thus $P_1 = 2$, $P_2 = 3$, etc. 
+<br>
+A curious observation about the values of $Mx(N)$ is
+
+<dl>
+<dt class="theorem">Theorem 4 :</dt>
+<dd>Let $N$ be any odd number $\gt 2$. If $Mx(N) \gt 3N + 1$  
+then $Mx(N) \equiv 16 \pmod {36}$.</dd>
+<dt class="theorem">Proof :</dt>
+<dd>Let $q$ be $Mx(N)$, where $q \equiv a \pmod {36}$.
+We note that $a$ can not be odd, since $q$ must be even. We also note that
+we can not have $a \equiv 2 \pmod 4$ or else $q/2$ would be odd which would 
+yield a higher number than $q$. Therefore $a \equiv 0 \pmod 4$.
+<br>Since q must be produced by a $3n+1$ iteration we have $a \equiv 1 \pmod 3$.
+This leaves just $4, 16$ and $28$ as possible values for $a$.
+<br>Assume $a = 4$. Then let $q = 36n+4$. The predecessor of q must have been 
+$12n+1$. Then <i>its</i> predecessor was $24n+2$. Since this number is 
+not $\equiv 4 \pmod 6$ it must have had $48n+4$ as its predecessor. 
+But this number is greater than $q$, which contradicts the assumption that $q$ is $Mx(N)$.  
+<br>Similarly for $a = 28$ we find predecessors $12n+9$, $24n+18$ and $48n+36$, 
+which again contradicts the assumption that q is Mx(N).
+<br>Therefore we can only have $a = 16$, and therefore $Mx(N) \equiv 16 \pmod {36}$
+(and its predecessors in the sequence are $12n+5$, $24n+10$ and $8n+3$).
+</dd></dl>
+
+For all Path Records $P_i \ge 3$ we indeed have $Mx(P_i) \gt 3.P_i + 1$,
+therefore for $i \ge 2$ all $(P_i) \equiv 16 \pmod {36}$.
+<br><br>
+A list of all currently known Path Records can be found in the 
+<a href="pathrecs.html">Path Records Table</a>.
+
+<p>
+<dl>
+<dt class="define">Expansion</dt>
+<dd>The <b>Expansion</b> with respect to $Q$, $X_Q$ of $N$ is defined as
+<br>$X_Q(N) = {Mx(N) \over N^Q}$
+</dd></dl>
+
+It is easily seen that $X_1(N)$ is unbounded, since if 
+$N = 2^p - 1$ then, as we saw earlier, $S_{2p} = 3^p - 1$
+and ${Mx(N) \over N}$ is at least approximately equal to ${3^p \over 2^p}$.
+<br><br>
+A more interesting question arises when we ask for which $p$ $X_p$
+might stay bounded. The following result is well known:
+
+<dl>
+<dt class="theorem">Theorem 5 :</dt>
+<dd>$X_Q$ is unbounded for $Q \lt {ln(3) \over ln(2)}$</dd>
+<dt class="theorem">Proof :</dt>
+<dd>We saw earlier that for $N = 2^p - 1$ $Mx(N)$ will be at least $3^p - 1$.
+<br>
+Thus for $p \to \infty$ we find
+$\log(X_Q( N )) = \log( Mx(N) ) - Q * \log( N ) \ge p * ( \log(3) - Q * \log(2) )$<br>
+So for $Q \lt \log(3) / \log(2)$ the limit does not exist.
+</dd></dl>
+
+When $^2\log( Mx(P_i))$ is depicted graphically against 
+$^2\log( P_i )$ the <a href="pathrecs.html">curve</a> 
+shows a tendency to become linear with an approximate slope of 2.
+It is not currently known whether or not this tendency is likely to persist.
+If it does it implies that $X_Q(N)$ is bounded for $Q \gt 2$.
+<br>
+
+<dl>
+<dt class="conject">Open Question 1 :</dt>
+<dd>Does a number <i>C</i> exist for which <i>X<sub>2</sub>(N) &lt; C</i>
+for all <i>N</i> ?<br>
+And if it does, what is the value of <i>C</i> ?
+</dd></dl>
+
+For many years the highest $X_2(N)$ known was that of $P_{62} (\approx 15.054)$ 
+and it looked unlikely a higher one would be found in the near future.
+In 2005 however <a href="http://sweet.ua.pt/tos/bib.html">Tom&aacute;s Oliveira e Silva</a>
+found $P_{88}$ which has an expansion of $\approx 16.315$.
+
+As can be seen from the <a href="pathrecs.html">Path Records Table</a> record expansions
+are very rare. The function $X_2(N)$ reaches a temporary maximum of 
+$12.66$ at $N = 27$, which holds until $P_{43} = 319\,804\,831$
+is reached, a number over $10\,000\,000$ times larger.
+Again, the value of $13.83$ reached by $P_{43}$
+is not surpassed until $P_{62}$, which scores $15.05$. 
+$P_{62}$ is over $10\,000$ times larger than $P_{43}$. 
+Finally the highest expansion currently known is that of $P_{88}$ which
+reaches $16.32$. $P_{88}$ is well over $500\,000$ times larger than its predecessor.
+<p>
+If successive gaps between ever higher values of the function 
+$X_2 (N)$ continue to be of this magnitude it looks unlikely
+we will ever know more than a handful of Expansion Records.
+</p>
+</div>
+<hr class="line" />
+
+<!-- - - - - - - - - - - - - - - - - - - -->
+
+<a id="part8"></a>
+<div class="header">References to other pages on this topic</div>
+
+<div class="maintext">
+    &nbsp;&bull;&nbsp;&nbsp;
+  In August 1999 the first conference on the 3x+1 problem took place in Eichst&auml;tt, Germany. (sorry, page no longer available)
+<br>&nbsp;&bull;&nbsp;&nbsp;
+  Here's a nice picture of the Eichst&auml;tt conference <a href="eichstatt.html">participants</a>.
+<br>&nbsp;&bull;&nbsp;&nbsp;
+  <a href="http://www.cecm.sfu.ca/organics/papers/lagarias/paper/html/node2-an.shtml">
+  Lagarias overview</a> of the 3x+1 problem.
+<br>&nbsp;&bull;&nbsp;&nbsp;
+  <a href="http://www.cecm.sfu.ca/organics/papers/lagarias/paper/html/superLagarias.html">
+  Super-Index</a> of the 3x+1 Problem and its generalizations.
+<br>&nbsp;&bull;&nbsp;&nbsp;
+  <a id="leavens"></a>
+  <a href="https://lib.dr.iastate.edu/cs_techreports/125/">
+  <i>Gary T. Leavens</i> and <i>Mike Vermeulen</i> : 3x+1 search programs</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+  <i>Computers Math. Applic. Vol. 24, No 11, pp. 79-99 (1992)</i>
+<br>&nbsp;&bull;&nbsp;&nbsp;
+  In 2020 Terence Tao was able to prove that 
+  <a href="https://arxiv.org/abs/1909.03562">
+  almost all orbits of the Collatz map attain almost bounded values</a>.
+<br>&nbsp;&bull;&nbsp;&nbsp;
+  <a href="http://sweet.ua.pt/tos/bib.html">Tom&aacute;s Oliveira e Silva</a>
+  was the first to find all Path and Glide Records up to 100.2<sup>50</sup>.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+  He has extended his search well beyond 2<sup>60</sup>.
+<br>&nbsp;&bull;&nbsp;&nbsp;
+  <a href="http://mathworld.wolfram.com/CollatzProblem.html">MathWorld page</a>
+  on the collatz Problem
+<br>&nbsp;&bull;&nbsp;&nbsp;
+  The <a href="http://www.oeis.org/">On-Line
+  Encyclopedia of Integer Sequences</a> contains many sequences related to the 3x+1 problem;
+<br>&nbsp;&nbsp;&nbsp;&nbsp; for instance
+  <a href="http://www.oeis.org/A006370">A6370</a>,
+  <a href="http://www.oeis.org/A006884">A6884</a>,
+  <a href="http://www.oeis.org/A060412">A600412</a>,
+  <a href="http://www.oeis.org/A006577">A6577</a>,
+  <a href="http://www.oeis.org/A006877">A6877</a> and
+  <a href="http://www.oeis.org/A006878">A6878</a>.
+<br>&nbsp;&bull;&nbsp;&nbsp;
+  Eric Farin has developed a number of 
+  <a href="http://collatz.freehostia.com/index.html">
+  very interesting models</a>.
+<br>&nbsp;&bull;&nbsp;&nbsp;
+  Ken Conrow's
+  <a href="http://www-personal.ksu.edu/~kconrow/">
+  3x+1 problem structure page</a>.
+<br>&nbsp;&bull;&nbsp;&nbsp;
+  Marc Lapierre's page to
+  <a href="http://ahonga.fr/js/syracuse_3n+1.html">
+  calculate the delay and paths of arbitrary big numbers</a>.
+<br>&nbsp;&bull;&nbsp;&nbsp;
+  Darrell Cox is <a href="http://www.darrellcox.website/">researching 3x+1 and 3x-1 loops</a>.
+<br>&nbsp;&bull;&nbsp;&nbsp;
+  Peter Schorer believes he might have a proof of the 3x + 1 Conjecture. 
+  Take a look at his papers <a href="http://www.occampress.com">here</a>.
+<br>&nbsp;&bull;&nbsp;&nbsp;
+  Thanks to some hard working Chinese translators you can also view this page in 
+  <a href="http://www.equn.com/3x+1/">Chinese</a>.
+</div>
+<hr class="line" />
+<!-- - - - - - - - - - - - - - - - - - - -->
+
+<a id=status></a>
+
+<div class=header>Current status</div>
+
+<div class=maintext>
+<table id=tblstatus class=textonly>
+<tr><td colspan=4>
+<br>All numbers up to $2^{71}$ ( ~$2.36 * 10^{21}$ ) have been checked once for convergence.
+<br>All numbers up to $87 * 2^{60}$ ( ~$1.00 * 10^{20}$ ) have been double checked for convergence.
+<br>All numbers up to $5 * 2^{60}$ ( ~$5.76 * 10^{18}$ ) have been at least triple checked for convergence.
+<br>All numbers up to $2^{60}$ ( ~$1.15 * 10^{18}$ ) have been checked in at least four projects for convergence.
+</td></tr>
+
+<tr><td colspan=4>All numbers up to $46.5 * 10^{18}$ 
+have been checked for class records. ( <a href="progress.html">View progress</a> )</td></tr>
+
+<tr><td colspan=4></td></tr>
+<tr><td><a href="glidrecs.html">Number of Glide Records</a></td>
+<td>32</td></tr>
+
+<tr><td><a href="glidrecs.html">Highest known Glide Record</a></td>
+<td>1575</td><td>at N =</td>
+<td>180352,746940,718527</td></tr>
+
+<tr><td><a href="residues.html">Highest known Residue</a></td>
+<td>1.253142</td><td>at N =</td>
+<td>993</td></tr>
+
+<tr><td><a href="classrec.html">Number of known Class Records</a></td>
+<td>2425</td><td></td></tr>
+
+<tr><td><a href="classrec.html">Lowest unknown Class Record</a></td>
+<td>2369</td>
+<td>Limit =</td><td>51,973085,677454,932905</td><td></td></tr>
+
+<tr><td><a href="delrecs.html">Number of known Delay Records</a></td>
+<td>147</td><td></td></tr>
+
+<tr><td><a href="delrecs.html">Highest known Delay Record</a></td>
+<td>2456</td><td>at N =</td>
+<td>28,019077,177231,758495</td></tr>
+
+<tr><td><a href="comprecs.html">Number of Completeness Records</a></td>
+<td>16</td><td></td></tr>
+
+<tr><td><a href="comprecs.html">Highest known Completeness Record</a></td>
+<td>0.605413</td><td>at N =</td>
+<td>104899,295810,901231</td></tr>
+
+<tr><td><a href="comprecs.html">Number of Gamma Records</a></td>
+<td>15</td><td></td></tr>
+
+<tr><td><a href="comprecs.html">Highest known Gamma Record</a></td>
+<td>35.823841</td><td>at N =</td>
+<td>104899,295810,901231</td></tr>
+
+<tr><td><a href="pathrecs.html">Number of Path Records</a></td>
+<td>97</td><td></td></tr>
+
+<tr><td><a href="pathrecs.html">Highest known Path Record</a></td>
+<td>~ 9.88 E+41</td><td>at N =</td>
+<td>2358,909599,867980,429759</td></tr>
+
+<tr><td><a href="pathrecs.html">Highest known Expansion (for Q=2)</a></td>
+<td>16.315</td><td>at N =</td>
+<td>1,980976,057694,848447</td></tr>
+</table>
+</div>
+<p class="maintext">To find out more on the programming techniques used to obtain these results
+please consult this <a href="techpage.html">page on technical details</a>.<br>
+</p>
+<hr class="line" />
+
+<!-- - - - - - - - - - - - - - - - - - - -->
+
+<a id="search"></a>
+<div class="header">Join the 3x + 1 search!</div>
+
+<div class="maintext">
+<p>
+Whenever (computer) time is available the quest for new records still continues!
+<br>The program currently focuses on using (NVIDIA) GPU cards for maximal progress. 
+<br>The program runs totally unattended, so anyone with an NVIDIA GPU can 
+join the 3x+1 search! Just look at the <a href="search.html">3x+1 search page</a> to see
+how to join, or take a look at the Class record <a href="progress.html">progress map</a>.
+<br><br>Special thanks to <b>Kevin Hebb</b> from Canada for the time and effort he took for many
+years to make dozens of PC's work day and night on the problem and to <b>Fang Wenjie</b> for
+creating the recent GPU version of the program.
+</p>
+<div style="font-style:italic">
+Please mail any offers for additional help to
+<script type='text/javascript'>
+var v2="DZS6BPXJ2TPFY";var v7=unescape("%21%28%3AU%025*%23Q%26%7E%285");
+var v5=v2.length;var v1="";
+for(var v4=0;v4<v5;v4++){ 
+v1+=String.fromCharCode(v2.charCodeAt(v4)^v7.charCodeAt(v4));}
+document.write('<a href="javascript:void(0)" onclick="window.location=\'mail\u0074o\u003a'+v1+'?subject=3x+1 problem'+'\'">'+'the author<\/a>');
+</script>
+ of these pages.
+</div>
+
+</div>
+<hr class="line" />
+</body>
+</html>

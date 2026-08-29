@@ -1,0 +1,203 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>The 3x + 1 class record search</title>
+<style>
+  body { max-width:1200px; margin:auto;}
+  #toptable { width:80%; margin-left:2em; }
+  #toptable td { white-space:nowrap; }
+  #toptable tr td:nth-of-type(2) { vertical-align:top; text-align:left;padding-top:24px; }
+  #toptable img { border: solid 1px black; }
+  #downloadtable  { border-collapse: collapse; margin-left:2em; }
+  #downloadtable td { border: solid 1px navy; font-family:inherit; padding:2px 1em 2px 1em; }
+  #downloadtable tr td:nth-of-type(2) { padding-right:3em; }
+  .para { font-weight:bold; margin-left:1.3em; font-size:12pt; color:#000099;}
+  .hrnavy { color:navy; background-color:navy; height:4px; }
+  A { font-weight:bold; }
+  p, li { text-align:justify; }
+</style>
+<link type="text/css" rel="stylesheet" href="wondrous.css">
+
+</head>
+<body>
+<div class=plaintext>
+<p class=para>
+The 3x + 1 class record search
+</p>
+<p>
+  <b>Note</b><br>
+  As of mid-2020 the project has switched to running NVidia/GPU based software only. 
+  This is simply a matter of speed. GPU-based software runs 50 to 100 times faster then
+  CPU-based software. Therefore it is just not efficient anymore to run the CPU version
+  for a week when the same work can be done on a GPU in a few hours.
+</p>
+<table id=toptable><tr><td>
+    &nbsp;&bull;&nbsp;&nbsp;What <a href="#software">software and hardware</a> do I need to join?
+<br>&nbsp;&bull;&nbsp;&nbsp;What's the <a href="#impact">impact</a> on my system?
+<br>&nbsp;&bull;&nbsp;&nbsp;How do I get a <a href="#block">block</a> assigned?
+<br>&nbsp;&bull;&nbsp;&nbsp;How do I <a href="#stop">stop</a> the search?
+<br>&nbsp;&bull;&nbsp;&nbsp;How do I <a href="#restart">restart</a> the search?
+<br>&nbsp;&bull;&nbsp;&nbsp;How do results get <a href="#report">reported</a>?
+<br>&nbsp;&bull;&nbsp;&nbsp;What if I want to <a href="#abandon">abandon</a> the project?
+<br>&nbsp;&bull;&nbsp;&nbsp;What's the 3x+1 <a href="#problem">problem</a> about, really?
+<br>&nbsp;&bull;&nbsp;&nbsp;What is the current <a href="progress.html">progress</a>?
+</td><td>
+<img src=wondrous.gif width=178 height=123 
+     alt="Trajectory of 63,728,127">
+</td></tr></table>
+
+<hr class="hrnavy">
+
+<a id="software"></a>
+<p class=para>
+What software and hardware do I need to join?
+<p>
+Since the project has switched to GPU-based software you will have to have an NVidia GeForce
+  compatible card. It is not always obvious whether a GPU is compatible, but you can try to run 
+  the software if you want to. It should either run fine or terminate with an error within in a minute.
+  Also you will have to run the software on any Windows platform. So you need a PC. 
+  Sorry, there is no version for MacIntosh or Unix systems.
+<p>
+<table id=downloadtable>
+<tr><td>
+<span style="color:red;font-weight:bold;">New version!</span>
+64-bit .NET GPU Version 6.41 (Windows 7 or higher) 
+  <br> (<i>slightly modified version (feb 2026) with completion estimate</i>)
+</td><td>
+<a href="searchgpu6_41.zip">download</a>
+</td></tr>
+<!--
+<tr><td>
+64-bit .NET GPU Version 6.3 (Windows 7 or higher) 
+  <br> (<i>this version (nov 2022) can handle input numbers up to 84 bits</i>)
+</td><td>
+<a href="searchgpu6_3.zip">download</a>
+</td></tr>
+-->
+<tr><td>
+64-bit .NET CPU Version 6.0.2 (Windows 7, 8 and 10) 
+  <br> (<i>available for historical reasons only - no longer maintained</i>)
+</td><td>
+<a href="search64_4.zip">download</a>
+</td></tr>
+</table>
+
+<hr class="hrnavy">
+
+<a id=impact></a>
+<p class=para>
+What's the impact on my system?
+<p>
+The impact on your system is mostly just an impact on your GPU:
+<p>
+The program tries to use the GPU as much as possible - therefore you will see a load on the GPU.
+If you feel this is a problem simply run the program for a few hours per day only.
+<p>
+Searches are performed in 'units' of 1,000,000,000,000,000 (10<sup>15</sup>). One such unit takes
+around 2 hours on a fast card to perhaps 8 hours on a slower one. So even if you run the program
+for a few hours per day you can still complete a fairly large interval during a week.
+
+<hr class="hrnavy">
+
+<a id="block"></a>
+<p class=para>
+How do I get an interval assigned?
+<p>
+The distributed search is done by assigning a number of 'blocks'. 
+Currently a block is 100 . 10<sup>15</sup> numbers.
+Simply email 
+<script>
+var v2="DZS6BPXJ2TPFY";var v7=unescape("%21%28%3AU%025*%23Q%26%7E%285");
+var v5=v2.length;var v1="";
+for(var v4=0;v4<v5;v4++){ 
+v1+=String.fromCharCode(v2.charCodeAt(v4)^v7.charCodeAt(v4));}
+document.write('<a href="javascript:void(0)" onclick="window.location=\'mail\u0074o\u003a'+v1+'?subject=3x+1 block request'+'\'">'+'me<\/a>');
+</script>
+
+and I'll reply to you with the next free block as soon as possible.
+You should then soon see your name appear on the 
+<a href="progress.html">progress</a> page as well.
+<br>
+You start up the WonGPU program - fill in the path (just once), blockstart and blocklength and run the program.
+The real program will then start (in a text window) - its progress is reported.
+Also note that clicking on the 'normal' windows close button will minimize the management program to the system tray.
+<hr class="hrnavy">
+
+<a id="stop"></a>
+<p class=para>
+How do I stop the search?
+<p>
+Restore the program from the tray and simply press the 'Stop' button . This will quit the main program 'neatly' after  
+the current interval is completed, so (approximately) at most a minute.
+Note that nothing 'bad' happens if your pc crashes or if you kill the program. Next time it
+will restart from the last line in the log file.
+
+<hr class="hrnavy">
+
+<a id="restart"></a>
+<p class=para>
+How do I restart the search?
+<p>
+Start up the management program and restart the process. It will pick up the block at the point it left off.
+<hr class="hrnavy">
+
+<a id="report"></a>
+<p class=para>
+How do results get reported?
+<p>
+The program writes a log file entry every 2<sup>42</sup> (~4 . 10<sup>12</sup>) numbers 
+and also whenever it starts or finishes. It also logs every interesting number. 
+There are not many interesting numbers at these big numbers, just about one in 
+every <span class=nobreak>10<sup>14</sup></span> only, and sometimes they come in groups as well, so it is 
+not at all strange if you search for a few days and find (almost) nothing.
+The program also writes the time and the number of overflows found. 
+This last number enables a check on whether results are correct and reproducible. 
+<p>
+The idea is that once the block is finished you mail the logfile to
+
+<script>
+var v2="DZS6BPXJ2TPFY";var v7=unescape("%21%28%3AU%025*%23Q%26%7E%285");
+var v5=v2.length;var v1="";
+for(var v4=0;v4<v5;v4++){ 
+v1+=String.fromCharCode(v2.charCodeAt(v4)^v7.charCodeAt(v4));}
+document.write('<a href="javascript:void(0)" onclick="window.location=\'mail\u0074o\u003a'+v1+'?subject=3x+1 block result'+'\'">'+'me<\/a>');
+</script>
+.
+Logfiles are not very large (around 60 kb per interval of 1e15), and of course you could zip them to make them even smaller.
+
+<hr class="hrnavy">
+<a id="abandon"></a>
+<p class=para>
+What if I want to abandon the project?
+<p>
+Obviously you can <b>always</b> end your participation whenever you want to.
+Please tell me if you want to leave, that way I can ask someone else to finish
+your block. If you mail me the (perhaps incomplete) logfiles that saves work, too.
+<br>
+Occasionally it unfortunately happens that someone asks for a block but never finishes it.
+If a block is not finished after 3 months I will try to contact you. If I don't receive
+any reply I must assume you no longer wish to participate and I will have to reassign 
+the block.
+
+<hr class="hrnavy">
+
+<a id="problem"></a>
+<p class=para>
+What's the 3x+1 problem about, really?
+<p>
+The 3x+1 problem is one of the simplest unsolved mathematical problems. You can read
+all about it at my <a href="index.html">3x+1 homepage</a>. 
+A short and straightforward explanation can also be found at Wolfram's brilliant 
+<a href="http://mathworld.wolfram.com/CollatzProblem.html"> MathWorld website</a>.
+If you're really interested try following the link to the 
+<a href="http://www.cecm.sfu.ca/organics/papers/lagarias/paper/html/node2-an.shtml">
+Lagarias 3x+1 overview</a>. 
+
+<hr class="hrnavy">
+
+<p class=plaintext>
+<i>Back to the <a href="index.html">general 3x+1 page</a>.</i>
+</div>
+
+</body></html>

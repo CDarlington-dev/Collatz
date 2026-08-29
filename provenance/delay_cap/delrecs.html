@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8"><title>Delay Records</title>
+<meta name="keywords" content="Mathematics, Collatz, delay, record, 3x+1, 3n+1">
+<link type="text/css" rel="stylesheet" href="wondrous.css">
+<style type="text/css">
+  body { font-family:arial, verdana, sans; }
+  #main td { border-width:0;}
+  #main>tbody>tr>td { vertical-align:top;}
+  #main>tbody>tr>td:first-of-type { padding:0.1em 1em 0 0.7em;  }
+  #main td:first-of-type p:first-of-type { 
+     white-space:nowrap; color:navy; font-size:18px; font-weight:bold; }
+  #main td:first-of-type p:nth-of-type(n+2) { text-align:justify; } 
+  #delays { border-collapse:collapse; margin-top:2em;}
+  #delays td { border:1px solid black; padding:2px 4px 2px 4px; white-space:nowrap;}
+  #delays tr:first-of-type td { text-align:center; background-color:#e0ffe0; font-weight:bold}
+  #delays tr:nth-of-type(2n+2) { background-color:#ffffcc; }
+  #delays tr:nth-of-type(2n+3) { background-color:snow; }
+  #delays tr:nth-of-type(n+2) td:nth-of-type(1) { text-align:right; }
+  #delays tr:nth-of-type(n+2) td:nth-of-type(2) { text-align:right; }
+  #delays tr:nth-of-type(n+2) td:nth-of-type(3) { text-align:right; }
+  #delays tr:nth-of-type(n+2) td:nth-of-type(4) { text-align:center; }
+  #delays tr:nth-of-type(n+2) td:nth-of-type(6) { text-align:left; }
+</style>
+<script>
+function start() {
+  getNumbers();
+}
+function getNumbers() {
+  let filename = 'delays.txt';
+  let request = new XMLHttpRequest();
+  request.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      let text = this.responseText;
+      processNumbers(text); 
+    }
+  };
+  request.open('get', filename, true);
+  request.send();
+}
+
+function processNumbers(numbertext) {
+  let numbers = numbertext.split('\n');
+  let tb = document.getElementById('delays').firstElementChild;
+  let rows = [];
+  let count = 0, strengthrecord = 0, strengthcount = 0;
+  for( let n = 0; n < numbers.length; n++ ) {
+    if ( numbers[n].length == 0 ) continue;
+    let result = calculate(numbers[n]);
+    count++;
+    let row = createNewRow(6);
+    row.cells[0].textContent = count;
+    row.cells[1].textContent = result.delay;
+    row.cells[2].textContent = result.number;
+    row.cells[3].textContent = result.level;
+    row.cells[4].textContent = result.residue.toFixed(6);
+    if( parseInt(result.number.substr(result.number.length-1,1)) % 2 == 0 )
+      row.cells[5].textContent = 'Double';
+    else if( result.strength > strengthrecord ) {
+      strengthrecord = result.strength;
+      strengthcount++;
+      row.cells[5].textContent = 'Strength Record #' + strengthcount;
+    }
+    rows.push(row);
+  }
+  for(let i = rows.length-1; i>=0; i-- ) {
+    tb.appendChild(rows[i]);
+  }
+}
+    function strtonumber(numstr)
+    {
+      let num = [];
+      while (numstr.length > 6) {
+        num.push(parseInt(numstr.substr(numstr.length - 6, 6), 10));
+        numstr = numstr.substring(0, numstr.length - 6);
+      }
+      if (numstr.length > 0)
+        num.push(parseInt(numstr));
+      return num;
+    }
+    function formatnumber(n)
+    {
+      let s = '00000' + n.toString();
+      return s.substr(s.length - 6, 6);
+    }
+    function numtostring(num)
+    {
+      let str = "";
+      for (let i = 0; i < num.length - 1; i++) {
+        str = "," + formatnumber(num[i]) + str;
+      }
+      str = num[num.length - 1] + str;
+      return str;
+    }
+    function dostep(num)
+    {
+      let limit = 1000000;
+      if (num[0] % 2 == 0) {
+        // first regroup to make all elements even
+        for (let i = 1; i < num.length; i++) {
+          if (num[i] % 2 == 1) {
+            num[i]--;
+            num[i - 1] += limit;
+          }
+        }
+        // now divide
+        for (let i = 0; i < num.length; i++) {
+          num[i] /= 2;
+        }
+        if (num[num.length - 1] == 0)  // remove largest element
+          num.pop();
+      }
+      else {
+        // multiply all elements
+        for (let i = 0; i < num.length; i++) {
+          num[i] *= 3;
+        }
+        num[0]++;
+        // now regroup
+        if (num[num.length - 1] >= limit)
+          num.push(0);
+        for (let i = 0; i < num.length - 1; i++) {
+          num[i + 1] += Math.floor(num[i] / limit);
+          num[i] %= limit;
+        }
+      }
+      return num;
+    }
+    function calculate(numberstr)
+    {
+      let rawnum = numberstr.replace(/,/g,'');
+      let num = parseFloat(rawnum);
+      let res = 1 / num;
+      let numberarr = strtonumber(rawnum);
+      let str = numtostring(numberarr);
+      let odd = 0, even = 0;
+      let remark = "";
+      while (numberarr.length > 1 || numberarr[0] > 1  ) {
+        if( numberarr[0] % 2 == 0 ) {
+          even++;
+          res *= 2;
+        } 
+        else {
+          odd++;
+          res /= 3;
+        }  
+        numberarr = dostep(numberarr);
+      }  
+      let delay = odd + even;
+      let strength = 5 * odd - 3 * even;
+      let level = -Math.floor(strength / 8.0);
+      return {
+        number: str,
+        delay: delay,
+        residue: res,
+        strength: strength,
+        level: level
+      }
+    }  
+    function createNewRow(rowCount) {
+      let tr = document.createElement('tr');
+      for( let i = 0; i < rowCount; i++ ) {
+        let td = document.createElement('td');
+        tr.appendChild(td);
+      }
+      return tr; 
+    }
+  </script>
+</script>
+</head>
+
+<body onload="start()">
+<p>
+
+<table id=main>
+<tr><td> 
+<p>
+3x+1 Delay Records
+<p>
+The table on the right depicts all currently known and confirmed delay records. Numbers with
+much higher delays are obviously known, but of course a record can only be considered a
+confirmed record when all smaller numbers have been checked and found to have a lower Delay.
+Records up to number 106 were already published in 1992 by 
+<a href="index.html#leavens">Leavens and Vermeulen</a>. As far as the author is aware the
+others were all found (or confirmed) by the distributed project.
+
+<p>
+From these data a few interesting observations can be made.  First of all it is noteworthy
+that approximately seven to eight records per decade (power of ten) are found, implying that
+on average a delay record is 1.36 times larger then its predecessor.
+It should be obvious that the maximum gap that can occur is a factor two, when a new record
+is exactly twice the previous record. This is no rare occcurrence, and indeed no less than
+16 delay records are 'doubles', improving the previous record by just one. Four of these are
+less than 100, when candidates for new records are rare anyway. Most others occur when a
+previous record has yielded a big improvement.
+<p>
+Many improvements in delay are just small. In a few cases though a delay record hugely
+improves the previous record. Record #59, at <span class=nobreak>63,728,127</span> improves
+the previous record by 205, easily the largest gap found so far. The only three other gaps
+to exceed 100 are 106, by record #96, 158 by record #109 and 163 by record #131. Interestingly
+these numbers are the lowest numbers of levels -1, -2, -3 and -4 respectively. Also all four
+are among the extremely rare <a href="strengths.html">strength records</a>,
+of which only five are known with certainty.
+
+<p>
+The 'residue' column shows that many delay records are in a way 'related', sharing near identical
+residues. Record #59 shares its residue of 1.183418 with the next 11 delay records, showing that
+their paths are coalescing well before they reach any numbers below 1,000,000. Similarly 11 delay
+records share the residue 1.151611. Beyond that another 'family' takes over, all sharing their
+residue of 1.148153 with strength record number 3. Finally no less than 16 consecutive delay records,
+among which we find strength record 4, show a residue of 1.146963.
+<br><br><hr>
+<p>
+<i>Back to the <a href="index.html">general 3x+1 page</a>.</i>
+</td>
+
+<td>
+<table id="delays">
+<tr>
+<td>#</td>
+<td>Delay</td>
+<td>N</td>
+<td>Level</td>
+<td>Residue</td>
+<td>Remark</td>
+</tr>
+
+</table>
+
+</td></tr>
+</table>
+</body>
+</html>

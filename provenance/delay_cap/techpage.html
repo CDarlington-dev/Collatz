@@ -1,0 +1,100 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<title>Technical details</title>
+<link href="wondrous.css" type="text/css" rel="stylesheet" />
+<style>
+div.maintext, hr.line { max-width: 60em; margin:auto auto 1em auto;}
+</style>
+</head>
+<body>
+
+<div class="pagehdr">
+Technical details
+</div>
+<div class="maintext">
+<p>
+Version 6.0 was optimized for 64-bits architectures and is written in C#. 
+It was mostly developed in 2011. The latest release (6.0.2) was optimized in 2018 for 
+numbers beyond 500.10<sup>15</sup> and is roughly 30% faster than the older version.</sup>.
+<p>
+Since searches for convergence, glides and path records are several orders of magnitude faster
+than searches for class records two different algorithms are used.
+</div>
+
+<div class="subheader">
+The convergence algorithm
+</div>
+<div class="maintext">
+The algorithm that checks for convergence, glides and path records uses a sieve: only those 
+numbers are checked that can not be shown to either converge or join the path of a lower number 
+within a few steps. The gain from this method is substantial. Using a sieve of 65536 
+(2<sup>16</sup>) for instance leaves only 1720 out of every 65536 numbers to be checked. 
+Currently a sieve of 2<sup>32</sup> is used which means the fraction of numbers that can be 
+skipped is over 99.2%. Apart from that the number is checked to see whether it may occur
+in the path of a lower number: all numbers that are congruent 
+<span class="nobreak"> 2, 4, 5 or 8 mod 9 </span> can easily be shown to occur in such a path 
+and can therefore be skipped as well. This accounts for 44.4% of all remaining numbers.
+<p>
+To speed up the search even further the code uses an "interlaced" technique, searching 
+2<sup>12</sup> numbers of the same congruence class modulo 2<sup>32</sup>. This means the sieve 
+can be calculated rather than stored and also enables simultaneous calculation of the iteration 
+path up to the 32nd division for the entire congruence class. This results in a
+further time reduction of approximately 50%.
+<p><i>Note: the convergence algorithm program is currently no longer active.</i>
+</div>
+
+<div class="subheader">
+The class record algorithm
+</div>
+<div class="maintext">
+In the algorithm that searches for high delays several techniques are combined to speed up 
+calculations. The main reduction is achieved by using a sieve to eliminate many numbers 
+beforehand. Different from the one above the sieve in this case checks whether
+paths come together rather than for straightforward convergence. If two paths
+join then obviously the upper one can never yield a class record and can
+be skipped. Currently the sievesize used is 2<sup>25</sup> elements wide, which in
+effect makes calculations of around 89% of all numbers unnecessary.
+<p>
+<span style="text-decoration:underline;" >Example:</span> any number of the form 8k+4 will
+reach 6k+4 after 3 steps, and so will any number of the form 8k+5. Therefore no number of 
+the form 8k+5 can be a class record (5 itself being the only exception). 
+Numbers of the form 8k+5 therefore do not need to be checked, 
+and all positions of the form 8k+5 in the sieve contain a zero.
+<p>
+Even numbers and all numbers congruent <span class="nobreak"> 2 modulo 3 </span> are 
+skipped as well, since potential class records of this type can easily be derived 
+from other, earlier class records, because any number of the form <span class="nobreak">2n + 1</span>
+can be seen to result in a number of the form <span class="nobreak">3n + 2</span> after two steps. 
+Similarly numbers of the form <span class="nobreak">9n + 4</span> can be seen to be skipped,
+because any class record of the form <span class="nobreak">8n + 3</span> will result in such
+a number after five steps.
+<p>
+Combining these last ideas with the sieve the calculations of around 93% of all numbers 
+can be shown to be redundant, effectively speeding up the calculations by a factor 14.
+<p>
+A cut-off technique is also applied at several points to either ensure a number is still a candidate 
+for a high delay or else to terminate further processing of this number. In most cases this implies 
+the calculation can be cut short after only a fraction of its trajectory.
+<p>
+To see that this technique works assume that two consecutive Delay Records (N1 and N2) have delays 
+D1 and D2 respectively. Once a number drops below N2 its delay can not be higher than D1 + the current 
+iteration count. If this sum is below a certain threshold (e.g. the delay of the lowest class record 
+still missing) processing this number can be abandoned.
+<p>
+Which delay records are used obviously depends on the exact numbers and in fact different intervals 
+require different cut-off points to obtain optimal performance. During the current interval 
+(where starting numbers are approximately 2<sup>59</sup>) trajectories are checked 
+against the delay records having delays of 1895, 1859, 1820, 1549, 1408, 1307 and 1087.
+<p>
+The performance gain of this technique depends largely on the magnitude
+of the numbers concerned, but has been empirically determined to be around a factor 10.
+</div>
+
+<hr class="line">
+
+<div class="back"> 
+Back to the <a href="index.html">general 3x+1 page</a>.
+</div>
+</body></html>

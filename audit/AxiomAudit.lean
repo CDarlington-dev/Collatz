@@ -1,0 +1,28 @@
+import Collatz
+
+#print axioms Collatz.product_bound_aux
+#print axioms Collatz.Farey.barrier
+#print axioms Collatz.Exclusion.two_feedback
+#print axioms Collatz.Exclusion.prefix_ge_seed_of_excursion_envelope_of_le
+#print axioms Collatz.Exclusion.farey_lower_bounds_of_at_least_threshold
+#print axioms Collatz.Exclusion.above_delay_coverage_of_at_least_threshold
+#print axioms Collatz.Exclusion.paradoxical_ordinary_length_lt_delay_cap
+#print axioms Collatz.Certified.no_paradoxical_start_through_current_coverage
+#print axioms Collatz.Certified.target_exclusion_of_remaining_inputs
+#print axioms Collatz.Certified.target_exclusion_of_optimized_inputs
+#print axioms Collatz.Certified.Finite.firstExcursionEnvelope_kernel
+#print axioms Collatz.Certified.Finite.optimizedFirstExcursionEnvelope_kernel
+#print axioms Collatz.Certified.finiteBaseClassification_4614_kernel
+#print axioms Collatz.Certified.finiteBaseClassification_26017_kernel
+#print axioms Collatz.Certified.no_paradoxical_start_above_4614_below_26018
+#print axioms Collatz.Certified.finiteBaseClassification_785412368_of_optimized_inputs
+#print axioms Collatz.Certified.Finite.finiteBaseClassification_six
+#print axioms Collatz.Certified.Finite.delayDAGCheck_sound
+#print axioms Collatz.Certified.Finite.colDelayCap20
+#print axioms Collatz.Certified.Finite.no_paradoxical_start_4615_through_10014
+#print axioms Collatz.Certified.Finite.no_paradoxical_start_4615_through_26017
+#print axioms Collatz.AffineBound.start_bound_of_paradoxical
+#print axioms Collatz.AffineBound.paradoxical_length_at_least_35
+#print axioms Collatz.Certified.every_published_witness_checks
+#print axioms Collatz.Certified.secondFarey_valid
+#print axioms Collatz.Certified.currentFarey_valid
